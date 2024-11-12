@@ -8,7 +8,7 @@ class Estoque(models.Model):
     ]
     
     tipo = models.CharField(max_length=10, choices=TIPOS_ESTOQUE)
-    produto = models.OneToOneField(Produto, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField(default=0)
     data_atualizacao = models.DateTimeField(auto_now=True)
 
@@ -27,4 +27,3 @@ class Estoque(models.Model):
             self.save()
         else:
             raise ValueError("Quantidade insuficiente no estoque")
-

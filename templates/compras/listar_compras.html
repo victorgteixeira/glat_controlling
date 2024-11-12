@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Lista de Compras{% endblock %}
+{% block content %}
+<h1>Lista de Compras</h1>
+
+{% if compras %}
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade Comprada</th>
+                <th>Data da Compra</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+                <tr>
+                    <td>{{ compra.produto.nome }}</td>
+                    <td>{{ compra.quantidade_comprada }}</td>
+                    <td>{{ compra.data_compra }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Não há compras registradas.</p>
+{% endif %}
+{% endblock %}

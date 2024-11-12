@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'clientes',
     'cpf_field',
     'estoque',
+    'compras',
+    'transferencias',
 ]
 
 MIDDLEWARE = [

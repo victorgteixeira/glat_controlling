@@ -36,12 +36,6 @@
                     <a class="a-home" href="{% url 'home' %}">Home</a>
                 </ul>
 
-                <li class="menu-title"><a class="menu-a" href="#">・ Dashboards</a>
-                    <ul class="submenu">
-                        <li><a href="#">Maiores Gastos</a></li>
-                    </ul>
-                </li>
-
                 <li class="menu-title"><a class="menu-a" href="#">・ Produtos</a>
                     <ul class="submenu">
                         <li><a href="{% url 'listar_produtos' %}">Listar Produtos</a></li>
@@ -52,6 +46,23 @@
                     <ul class="submenu">
                         <li><a href="#">Listar Vendas</a></li>
                         <li><a href="#">Adicionar Vendas</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Compra</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'registrar_compra' %}">Registrar compra</a></li>
+                        <li><a href="{% url 'listar_compras' %}">Ultimas Compras</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Transferir</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'registrar_transferencia' %}">Registrar Transferencia</a></li>
+                        <li><a href="{% url 'listar_transferencias' %}">Ultimas Transferencias</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Estoques</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'estoque_produto' %}">Listar Estoque</a></li>
                     </ul>
                 </li>
                 <li class="menu-title"><a class="menu-a" href="#">・ Clientes</a>

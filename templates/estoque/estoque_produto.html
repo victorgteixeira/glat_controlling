@@ -14,35 +14,33 @@
         <div class="add-product">
             <a href="{% url 'adicionar_produto' %}" class="btn-add">Adicionar Produto</a>
         </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Tipo de Estoque</th>
-                        <th>Quantidade</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for produto, estoques in estoques.items %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Tipo de Estoque</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto, estoques in produtos_estoques.items %}
+                    {% for estoque in estoques %}
                         <tr>
-                            <td rowspan="{{ estoques|length }}">{{ produto.nome }}</td>
-                            {% for estoque in estoques %}
-                                <td>{{ estoque.tipo_estoque }}</td>
-                                <td>{{ estoque.quantidade }}</td>
-                                <td>
-                                    <a href="{% url 'editar_estoque' produto.id %}" class="btn-edit">Editar</a>
-                                    <a href="{% url 'deletar_estoque' produto.id %}" class="btn-delete">Excluir</a>
-                                </td>
-                        </tr>
-                        {% endfor %}
-                        {% empty %}
-                        <tr>
-                            <td colspan="6">Nenhum produto encontrado.</td>
+                            {% if forloop.first %}
+                                <td rowspan="{{ estoques|length }}">{{ produto.nome }}</td>
+                            {% endif %}
+                            <td>{{ estoque.tipo }}</td>  <!-- Aqui você acessa o tipo de estoque -->
+                            <td>{{ estoque.quantidade }}</td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Nenhum produto encontrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 {% endblock %}
