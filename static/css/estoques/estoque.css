@@ -1,0 +1,125 @@
+/* estoque.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2.5em;
+}
+
+.add-product {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.btn-add {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-add:hover {
+    background-color: #45a049;
+}
+
+.no-items {
+    text-align: center;
+    font-size: 1.5em;
+    color: #888;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
+    color: #333;
+    font-size: 1.1em;
+}
+
+tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+tr:hover td {
+    background-color: #f1f1f1;
+}
+
+td a {
+    color: #007BFF;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+.btn-edit, .btn-delete {
+    padding: 5px 10px;
+    font-size: 1em;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background-color: #FFC107;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete {
+    background-color: #DC3545;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+    th, td {
+        font-size: 1em;
+        padding: 8px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+}

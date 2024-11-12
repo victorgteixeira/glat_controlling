@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cnpj_field',
     'clientes',
     'cpf_field',
+    'estoque',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Estoque de Produtos{% endblock %}
+{% load static %}
+{% block content %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/estoques/estoque.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Estoque de Produtos</h1>
+        
+        <!-- Botão de adicionar produto -->
+        <div class="add-product">
+            <a href="{% url 'adicionar_produto' %}" class="btn-add">Adicionar Produto</a>
+        </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Tipo de Estoque</th>
+                        <th>Quantidade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto, estoques in estoques.items %}
+                        <tr>
+                            <td rowspan="{{ estoques|length }}">{{ produto.nome }}</td>
+                            {% for estoque in estoques %}
+                                <td>{{ estoque.tipo_estoque }}</td>
+                                <td>{{ estoque.quantidade }}</td>
+                                <td>
+                                    <a href="{% url 'editar_estoque' produto.id %}" class="btn-edit">Editar</a>
+                                    <a href="{% url 'deletar_estoque' produto.id %}" class="btn-delete">Excluir</a>
+                                </td>
+                        </tr>
+                        {% endfor %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">Nenhum produto encontrado.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</body>
+{% endblock %}
