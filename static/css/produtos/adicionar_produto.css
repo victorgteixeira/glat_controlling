@@ -1,0 +1,121 @@
+/* Estilos principais */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.product-form .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 2px solid #ccc;  /* Linha divisória */
+    padding-bottom: 20px;
+}
+
+.product-form .form-column {
+    flex: 1;
+    min-width: 45%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-form .form-group {
+    margin-bottom: 15px;
+}
+
+.product-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.product-form input,
+.product-form textarea,
+.product-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.product-form input:focus,
+.product-form textarea:focus,
+.product-form select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
+}
+
+.product-form .form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.product-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para a lista de sugestões */
+#fornecedor-suggestions {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#fornecedor-suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #f1f1f1;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#fornecedor-suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+#fornecedor-suggestions li.selected {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+/* Mensagem de "Nenhum fornecedor encontrado" */
+#fornecedor-suggestions li.no-results {
+    font-style: italic;
+    color: #999;
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: none;
+}

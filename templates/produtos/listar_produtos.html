@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Lista de Produtos{% endblock %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/produtos/listar_produto.css' %}">
+<h2 class="page-title">Lista de Produtos</h2>
+
+<div class="product-table-container">
+    <!-- Botão de adicionar novo produto dentro da div da tabela -->
+    <a href="{% url 'adicionar_produto' %}" class="add-product-button">+ Adicionar Novo Produto</a>
+
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Código EAN</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Fornecedor</th>
+                <th>Preço</th>
+                <th>Status</th>
+                <th class="action-column">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.ean }}</td>
+                <td>{{ produto.descricao }}</td>
+                <td>{{ produto.quantidade }}</td>
+                <td>{{ produto.fornecedor.nome }}</td>
+                <td>{{ produto.preco }}</td>
+                <td>
+                    {% if produto.ativo %}
+                        <span class="badge badge-success">Ativo</span>
+                    {% else %}
+                        <span class="badge badge-danger">Inativo</span>
+                    {% endif %}
+                </td>
+                <td class="action-column">
+                    <a href="{% url 'editar_produto' produto.id %}" class="button">✎ Editar</a>
+                    <a href="{% url 'historico_modificacoes_produto' produto.id %}" class="button">📜 Histórico</a>
+                </td>
+            {% empty %}
+            <tr>
+                <td colspan="6">Nenhum produto encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

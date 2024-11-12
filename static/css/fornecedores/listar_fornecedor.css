@@ -1,0 +1,125 @@
+/* Estilo geral da página */
+.page-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Estilo para a tabela de fornecedores */
+.fornecedor-table-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fornecedor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.fornecedor-table th, .fornecedor-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.fornecedor-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.fornecedor-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.fornecedor-table td {
+    font-size: 1rem;
+}
+
+/* Estilo para mensagem de "nenhum fornecedor encontrado" */
+.fornecedor-table td[colspan="6"] {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+/* Estilos para o botão de adicionar fornecedor */
+.add-fornecedor-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none; /* Remove o sublinhado */
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-fornecedor-button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Estilo da coluna de ações (editar e excluir) */
+.action-column {
+    width: 150px;
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Estilo do contêiner dos botões */
+.form-actions {
+    text-align: left; /* Alinha os botões à esquerda (opcional) */
+}
+
+/* Estilo dos botões */
+.button {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none; /* Remove o sublinhado do link */
+    display: inline-block; /* Faz os botões ficarem na mesma linha */
+    margin-right: 10px; /* Adiciona um espaço entre os botões */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Efeito de hover nos botões */
+.button:hover {
+    background-color: #0056b3; /* Cor de fundo quando o botão é hover */
+    transform: scale(1.05); /* Efeito de aumento suave */
+}
+
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+}
+
+.badge-success {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.badge-danger {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+}

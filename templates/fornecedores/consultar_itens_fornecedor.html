@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Itens do Fornecedor - {{ fornecedor.nome }}{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/fornecedores/consultar_itens.css' %}">
+<h2 class="page-title">Itens do Fornecedor: {{ fornecedor.nome }}</h2>
+
+<div class="produtos-table-container">
+    <table class="produtos-table">
+        <thead>
+            <tr>
+                <th>Nome do Produto</th>
+                <th>Código do Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Data de Cadastro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.codigo }}</td>
+                <td>R$ {{ produto.preco|floatformat:2 }}</td>
+                <td>{{ produto.quantidade }}</td>
+                <td>{{ produto.data_criacao }}</td>
+                <td class="action-column">
+                    <div class="action-buttons">
+                        <a href="{% url 'editar_produto' produto.id %}" class="button">✎ Editar</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Nenhum item encontrado para este fornecedor.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'lista_fornecedores' %}" class="back-button">Voltar para a lista de Fornecedores</a>
+
+{% endblock %}

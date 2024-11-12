@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Adicionar Fornecedor{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/fornecedores/adicionar_fornecedor.css' %}">
+<h2 class="page-title">Adicionar Fornecedor</h2>
+<div class="form-container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_nome">Nome</label>
+            {{ form.nome }}
+        </div>
+        <div class="form-group">
+            <label for="id_cnpj">CNPJ</label>
+            {{ form.cnpj }}
+        </div>
+        <div class="form-group">
+            <label for="id_endereco">Endereço</label>
+            {{ form.endereco }}
+        </div>
+        <div class="form-group">
+            <label for="id_telefone">Telefone</label>
+            {{ form.telefone }}
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            <label for="id_ativo">Status</label>
+            <select name="ativo" id="id_ativo" class="form-control">
+                <option value="True" {% if form.ativo.value == 'True' %}selected{% endif %}>Ativo</option>
+                <option value="False" {% if form.ativo.value == 'False' %}selected{% endif %}>Inativo</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="button">Salvar Fornecedor</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

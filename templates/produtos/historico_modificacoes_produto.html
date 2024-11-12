@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Histórico de Modificações{% endblock %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/produtos/historico_produto.css' %}">
+<h2 class="page-title">Histórico de Modificações - {{ produto.nome }}</h2>
+
+<div class="historico-container">
+    <table class="historico-table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Campo Alterado</th>
+                <th>Valor Antigo</th>
+                <th>Valor Novo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for modificacao in historico %}
+            <tr>
+                <td>{{ modificacao.data }}</td>
+                <td>{{ modificacao.campo }}</td>
+                <td>{{ modificacao.valor_antigo }}</td>
+                <td>{{ modificacao.valor_novo }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Nenhuma modificação registrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="action-buttons">
+    <a href="{% url 'listar_produtos' %}" class="button">Voltar para a Lista de Produtos</a>
+</div>
+{% endblock %}
