@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Lista de Baixas por Perda{% endblock %}
+{% block content %}
+<h2>Lista de Baixas por Perda</h2>
+<table>
+    <tr>
+        <th>Produto</th>
+        <th>Quantidade Perdida</th>
+        <th>Data</th>
+    </tr>
+    {% for baixa in baixas %}
+    <tr>
+        <td>{{ baixa.produto.nome }}</td>
+        <td>{{ baixa.quantidade_perdida }}</td>
+        <td>{{ baixa.data_baixa }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

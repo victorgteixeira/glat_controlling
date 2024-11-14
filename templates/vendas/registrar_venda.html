@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Registrar Venda{% endblock %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Venda</title>
+</head>
+<body>
+    <h1>Registrar Venda</h1>
+
+    <!-- Exibe mensagens de sucesso ou erro -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Registrar Venda</button>
+        <a href="{% url 'listar_vendas' %}">Voltar para a lista de vendas</a>
+    </form>
+</body>
+</html>
+{% endblock %}

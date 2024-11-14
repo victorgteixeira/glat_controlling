@@ -44,8 +44,14 @@
                 </li>
                 <li class="menu-title"><a class="menu-a" href="#">・ Vendas</a>
                     <ul class="submenu">
-                        <li><a href="#">Listar Vendas</a></li>
-                        <li><a href="#">Adicionar Vendas</a></li>
+                        <li><a href="{% url 'listar_vendas' %}">Listar Vendas</a></li>
+                        <li><a href="{% url 'registrar_venda' %}">Adicionar Vendas</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Perdas</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_baixas' %}">Listar Perdas</a></li>
+                        <li><a href="{% url 'registrar_baixa' %}">Adicionar Perdas</a></li>
                     </ul>
                 </li>
                 <li class="menu-title"><a class="menu-a" href="#">・ Compra</a>

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Registrar Baixa por Perda{% endblock %}
+{% block content %}
+<h2>Registrar Baixa por Perda</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrar Baixa</button>
+</form>
+{% endblock %}
