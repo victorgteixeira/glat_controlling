@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <h1>Detalhes da Produção</h1>
+  
+  <p><strong>Produto Final:</strong> {{ producao.produto_final.nome }}</p>
+  <p><strong>Quantidade Produzida:</strong> {{ producao.quantidade }}</p>
+  <p><strong>Data da Produção:</strong> {{ producao.data_criacao }}</p>
+  <p><strong>Status:</strong> 
+    {% if producao.sucesso %}
+      <span style="color: green;">Concluída</span>
+    {% else %}
+      <span style="color: red;">Pendente</span>
+    {% endif %}
+  </p>
+  <p><strong>Mensagem:</strong> {{ producao.mensagem }}</p>
+  
+  <a href="{% url 'listar_producoes' %}">Voltar para a lista de produções</a>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Lista de Produções</h1>
+
+  {% if producoes %}
+    <table>
+      <thead>
+        <tr>
+          <th>Produto Final</th>
+          <th>Quantidade Produzida</th>
+          <th>Data da Produção</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for producao in producoes %}
+          <tr>
+            <td>{{ producao.produto_final.nome }}</td>
+            <td>{{ producao.quantidade }}</td>
+            <td>{{ producao.data }}</td> 
+            <td>
+              {% if producao.sucesso %}
+                <span style="color: green;">Concluída</span>
+              {% else %}
+                <span style="color: red;">Pendente</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'detalhar_producao' producao.id %}">Ver Detalhes</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Não há produções registradas.</p>
+  {% endif %}
+{% endblock %}

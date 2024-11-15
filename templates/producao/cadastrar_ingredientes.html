@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Cadastrar Ingredientes para Produção</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="produto_final">Produto Final:</label>
+    <select name="produto_final" id="produto_final">
+        {% for produto in produtos %}
+            <option value="{{ produto.id }}">{{ produto.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="ingrediente">Ingrediente:</label>
+    <select name="ingrediente" id="ingrediente">
+        {% for produto in produtos %}
+            <option value="{{ produto.id }}">{{ produto.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="quantidade_necessaria">Quantidade Necessária:</label>
+    <input type="number" name="quantidade_necessaria" id="quantidade_necessaria" step="0.01" required>
+
+    <button type="submit">Adicionar Ingrediente</button>
+</form>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}
