@@ -1,0 +1,182 @@
+/* Estilo geral para a página */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    width: 85%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.tabela-baixas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tabela-baixas th,
+.tabela-baixas td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabela-baixas th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+}
+
+.tabela-baixas td {
+    color: #555;
+}
+
+.tabela-baixas tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.tabela-baixas tbody tr:nth-child(even) {
+    background-color: #f4f7f6;
+}
+
+.tabela-baixas td {
+    font-size: 1rem;
+}
+
+.tabela-baixas td, th {
+    padding: 12px 15px;
+}
+
+.tabela-baixas td[colspan="3"] {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
+
+.tabela-baixas {
+    overflow-x: auto;
+}
+
+.tabela-baixas table {
+    min-width: 600px;
+}
+
+.btn-nova-baixa {
+    background-color: #4CAF50;  /* Verde */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.btn-nova-baixa:hover {
+    background-color: #45a049;  /* Cor um pouco mais escura quando passar o mouse */
+}
+
+/* Estilo do formulário de pesquisa */
+.form-pesquisa {
+    margin-bottom: 20px;
+}
+
+.input-pesquisa {
+    padding: 8px;
+    font-size: 14px;
+    width: 300px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-pesquisar {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-pesquisar:hover {
+    background-color: #45a049;
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+/* Estilo de paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0 5px;
+}
+
+.pagination a:hover {
+    background-color: #45a049;
+}
+
+.pagination .current-page {
+    align-self: center;
+    font-size: 16px;
+}
+
+/* Estilo para o botão de adicionar nova baixa */
+.btn-adicionar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.btn-adicionar:hover {
+    background-color: #45a049;
+}

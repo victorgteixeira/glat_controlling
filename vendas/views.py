@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Venda
 from .forms import VendaForm
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 def registrar_venda(request):
     if request.method == "POST":
@@ -21,5 +23,15 @@ def registrar_venda(request):
     return render(request, 'vendas/registrar_venda.html', {'form': form})
 
 def listar_vendas(request):
-    vendas = Venda.objects.all()
-    return render(request, 'vendas/listar_vendas.html', {'vendas': vendas})
+    query = request.GET.get('q', '')
+    
+    if query:
+        vendas = Venda.objects.filter(Q(produto__nome__icontains=query))
+    else:
+        vendas = Venda.objects.all()
+    
+    paginator = Paginator(vendas, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'vendas/listar_vendas.html', {'vendas': page_obj, 'query': query})

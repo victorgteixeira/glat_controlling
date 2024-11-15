@@ -9,6 +9,7 @@ class Compra(models.Model):
     quantidade_comprada = models.PositiveIntegerField()
     data_compra = models.DateField(auto_now_add=True)
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE, related_name="compras")
+    valor_unitario = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"Compra de {self.quantidade_comprada} unidades de {self.produto.nome} do fornecedor {self.fornecedor.nome} em {self.data_compra}"

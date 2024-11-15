@@ -27,7 +27,6 @@
                 </div>
             </div>
 
-            <!-- Linha divisória -->
             <hr class="divider">
 
             <div class="form-column">
@@ -66,6 +65,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Salvar Produto</button>
+            <a href="{% url 'listar_produtos' %}" class="cancelar-a">Cancelar</a>
         </div>
     </form>
 </div>
@@ -74,7 +74,7 @@
 document.getElementById('search-fornecedor').addEventListener('input', function() {
     var query = this.value.trim();
     var suggestionsList = document.getElementById('fornecedor-suggestions');
-    suggestionsList.innerHTML = '';  // Limpa a lista de sugestões
+    suggestionsList.innerHTML = ''; 
 
     if (query === '') {
         return;
@@ -92,7 +92,7 @@ document.getElementById('search-fornecedor').addEventListener('input', function(
                     li.addEventListener('click', function() {
                         document.getElementById('search-fornecedor').value = fornecedor.nome;
                         document.getElementById('id_fornecedor').value = fornecedor.id;
-                        suggestionsList.innerHTML = '';  // Limpa as sugestões
+                        suggestionsList.innerHTML = ''; 
                     });
 
                     suggestionsList.appendChild(li);

@@ -1,11 +1,82 @@
 {% extends "base.html" %}
 {% block title %}Registrar Compra{% endblock %}
+{% load static %}
 {% block content %}
-<h1>Registrar Compra</h1>
+    <div class="form-container">
+        <h1>Registrar Compra</h1>
+        <header>
+            <link rel="stylesheet" href="{% static 'css/compras/registrar_compra.css' %}">
+        </header>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn-submit">Registrar Compra</button>
-</form>
+        {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" class="form-compra">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.produto.id_for_label }}">Produto</label>
+                {{ form.produto }}
+                {% if form.produto.errors %}
+                    <div class="error-message">
+                        {% for error in form.produto.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.quantidade_comprada.id_for_label }}">Quantidade Comprada</label>
+                {{ form.quantidade_comprada }}
+                {% if form.quantidade_comprada.errors %}
+                    <div class="error-message">
+                        {% for error in form.quantidade_comprada.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.fornecedor.id_for_label }}">Fornecedor</label>
+                {{ form.fornecedor }}
+                {% if form.fornecedor.errors %}
+                    <div class="error-message">
+                        {% for error in form.fornecedor.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.valor_unitario.id_for_label }}">Valor Unitário</label>
+                {{ form.valor_unitario }}
+                {% if form.valor_unitario.errors %}
+                    <div class="error-message">
+                        {% for error in form.valor_unitario.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_valor_total">Valor Total</label>
+                <input type="text" name="valor_total" id="id_valor_total" value="{{ form.valor_total.value|default:0 }}" readonly>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Registrar Compra</button>
+            </div>
+        </form>
+
+        <script type="text/javascript" src="{% static 'js/calcular_valor_total.js' %}"></script>
+    </div>
 {% endblock %}

@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for modificacao in historico %}
+            {% for modificacao in page_obj %}
             <tr>
                 <td>{{ modificacao.data }}</td>
                 <td>{{ modificacao.campo }}</td>
@@ -31,6 +31,25 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- Paginação -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </div>
 
 <div class="action-buttons">

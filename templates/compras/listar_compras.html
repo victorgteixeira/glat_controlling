@@ -1,28 +1,63 @@
 {% extends "base.html" %}
 {% block title %}Lista de Compras{% endblock %}
 {% block content %}
+{% load static %}
 <h1>Lista de Compras</h1>
 
+<header>
+    <link rel="stylesheet" href="{% static 'css/compras/listar_compras.css' %}">
+</header>
+
+<div class="search-container">
+    <form method="get" class="form-pesquisa">
+        <input type="text" name="q" value="{{ query }}" placeholder="Pesquisar por produto, quantidade ou data">
+        <button type="submit">
+            <img src="{% static 'icons/search-icon.svg' %}" alt="Ícone de pesquisa">
+        </button>
+    </form>
+</div>
+
 {% if compras %}
-    <table>
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade Comprada</th>
-                <th>Data da Compra</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for compra in compras %}
+    <div class="table-container">
+        <table class="compras-table">
+            <thead>
                 <tr>
-                    <td>{{ compra.produto.nome }}</td>
-                    <td>{{ compra.quantidade_comprada }}</td>
-                    <td>{{ compra.data_compra }}</td>
+                    <th>Produto</th>
+                    <th>Quantidade Comprada</th>
+                    <th>Data da Compra</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                    <tr>
+                        <td>{{ compra.produto.nome }}</td>
+                        <td>{{ compra.quantidade_comprada }}</td>
+                        <td>{{ compra.data_compra }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if compras.has_previous %}
+                    <a href="?page=1&q={{ query }}" class="first-last">Primeira</a>
+                    <a href="?page={{ compras.previous_page_number }}&q={{ query }}" class="prev-next">Anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ compras.number }} de {{ compras.paginator.num_pages }}.
+                </span>
+
+                {% if compras.has_next %}
+                    <a href="?page={{ compras.next_page_number }}&q={{ query }}" class="prev-next">Próxima</a>
+                    <a href="?page={{ compras.paginator.num_pages }}&q={{ query }}" class="first-last">Última</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
 {% else %}
     <p>Não há compras registradas.</p>
 {% endif %}
+
 {% endblock %}

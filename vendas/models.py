@@ -6,6 +6,7 @@ class Venda(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name="vendas")
     quantidade = models.PositiveIntegerField()
     data_venda = models.DateTimeField(auto_now_add=True)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"Venda de {self.quantidade} unidades de {self.produto.nome} em {self.data_venda}"

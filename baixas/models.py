@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 class Baixa(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name='baixas')
     quantidade_perdida = models.PositiveIntegerField()
+    valor_perda = models.DecimalField(max_digits=10, decimal_places=2)
     data_baixa = models.DateField(auto_now_add=True)
 
     def __str__(self):

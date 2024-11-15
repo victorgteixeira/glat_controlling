@@ -1,19 +1,60 @@
 {% extends "base.html" %}
 {% block title %}Lista de Baixas por Perda{% endblock %}
 {% block content %}
-<h2>Lista de Baixas por Perda</h2>
-<table>
-    <tr>
-        <th>Produto</th>
-        <th>Quantidade Perdida</th>
-        <th>Data</th>
-    </tr>
-    {% for baixa in baixas %}
-    <tr>
-        <td>{{ baixa.produto.nome }}</td>
-        <td>{{ baixa.quantidade_perdida }}</td>
-        <td>{{ baixa.data_baixa }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/baixas/listar_baixas.css' %}">
+</head>
+
+<div class="container">
+    <header>
+        <h2>Lista de Baixas por Perda</h2>
+        <form method="get" class="form-pesquisa">
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Pesquisar por produto" class="input-pesquisa">
+            <button type="submit" class="btn-pesquisar">Pesquisar</button>
+        </form>
+    </header>
+    <a href="{% url 'registrar_baixa' %}" class="btn-adicionar">Nova Baixa por Perda</a>
+    <section class="tabela-baixas">
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade Perdida</th>
+                    <th>Valor da Perda</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for baixa in page_obj %}
+                <tr>
+                    <td>{{ baixa.produto.nome }}</td>
+                    <td>{{ baixa.quantidade_perdida }}</td>
+                    <td>{{ baixa.valor_perda|floatformat:2 }}</td>
+                    <td>{{ baixa.data_baixa }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Nenhuma baixa encontrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1&search={{ search_query }}" class="btn-paginacao">Primeira</a>
+            <a href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}" class="btn-paginacao">Anterior</a>
+        {% endif %}
+        <span class="current-page">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&search={{ search_query }}" class="btn-paginacao">Próxima</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" class="btn-paginacao">Última</a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

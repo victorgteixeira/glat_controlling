@@ -4,10 +4,24 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/produtos/listar_produto.css' %}">
+<script src="{% static 'js/produtos/listar_produtos.js' %}"></script>
 <h2 class="page-title">Lista de Produtos</h2>
 
 <div class="product-table-container">
-    <!-- Botão de adicionar novo produto dentro da div da tabela -->
+
+    <div class="search-container">
+        <form method="get" action="{% url 'listar_produtos' %}">
+            <input 
+                type="text" 
+                name="search" 
+                id="search-bar" 
+                placeholder="Digite o nome do produto..." 
+                value="{{ request.GET.search|default:'' }}" 
+                class="search-bar"
+            />
+            <button type="submit" class="search-button">🔍</button>
+        </form>
+    </div>
     <a href="{% url 'adicionar_produto' %}" class="add-product-button">+ Adicionar Novo Produto</a>
 
     <table class="product-table">
@@ -31,7 +45,7 @@
                 <td>{{ produto.descricao }}</td>
                 <td>{{ produto.quantidade }}</td>
                 <td>{{ produto.fornecedor.nome }}</td>
-                <td>{{ produto.preco }}</td>
+                <td>R$ {{ produto.preco }}</td>
                 <td>
                     {% if produto.ativo %}
                         <span class="badge badge-success">Ativo</span>
@@ -43,12 +57,32 @@
                     <a href="{% url 'editar_produto' produto.id %}" class="button">✎ Editar</a>
                     <a href="{% url 'historico_modificacoes_produto' produto.id %}" class="button">📜 Histórico</a>
                 </td>
+            </tr>
             {% empty %}
             <tr>
-                <td colspan="6">Nenhum produto encontrado.</td>
+                <td colspan="8">Nenhum produto encontrado.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?search={{ search_query }}&page=1">Primeira</a>
+                <a href="?search={{ search_query }}&page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+    
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?search={{ search_query }}&page={{ page_obj.next_page_number }}">Próxima</a>
+                <a href="?search={{ search_query }}&page={{ page_obj.paginator.num_pages }}">Última</a>
+            {% endif %}
+        </span>
+    </div>
+    
 </div>
 {% endblock %}

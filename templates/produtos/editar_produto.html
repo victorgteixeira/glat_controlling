@@ -28,14 +28,8 @@
                     <label for="{{ form.descricao.id_for_label }}">Descrição</label>
                     {{ form.descricao }}
                 </div>
-
-                <div class="form-group">
-                    <label for="{{ form.quantidade.id_for_label }}">Quantidade</label>
-                    {{ form.quantidade }}
-                </div>
             </div>
 
-            <!-- Linha divisória -->
             <hr class="divider">
 
             <div class="form-column">
@@ -47,7 +41,6 @@
                 <div class="form-group">
                     <label for="search-fornecedor">Fornecedor</label>
                     <div class="input-group">
-                        <!-- Exibe o nome do fornecedor, se houver -->
                         <input type="text" id="search-fornecedor" class="form-control" placeholder="Digite o nome do fornecedor" 
                                value="{{ produto.fornecedor.nome|default:'' }}">
                         <div class="input-group-append">
@@ -55,7 +48,6 @@
                         </div>
                     </div>
                     <ul id="fornecedor-suggestions" class="suggestions-list"></ul>
-                    <!-- Campo hidden para armazenar o ID do fornecedor -->
                     <input type="hidden" name="fornecedor" id="id_fornecedor" value="{{ produto.fornecedor.id|default:'' }}">
                 </div>     
 
@@ -63,12 +55,19 @@
                     <label for="{{ form.preco.id_for_label }}">Preço</label>
                     {{ form.preco }}
                 </div>
+                <div class="form-group">
+                    <label for="id_ativo">Status</label>
+                    <select name="ativo" id="id_ativo" class="form-control">
+                        <option value="True" {% if form.ativo.value == 'True' %}selected{% endif %}>Ativo</option>
+                        <option value="False" {% if form.ativo.value == 'False' %}selected{% endif %}>Inativo</option>
+                    </select>
+                </div>
             </div>
         </div>
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Salvar Produto</button>
-            <a href="{% url 'listar_produtos' %}" class="btn btn-secondary">Cancelar</a>
+            <a href="{% url 'listar_produtos' %}" class="cancelar-a">Cancelar</a>
         </div>
     </form>
 </div>

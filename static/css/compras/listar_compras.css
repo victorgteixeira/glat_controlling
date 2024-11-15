@@ -1,0 +1,120 @@
+/* Estilos para o título */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Container para o formulário de pesquisa */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos da barra de pesquisa */
+.form-pesquisa {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    border-radius: 25px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-pesquisa input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 1rem;
+    margin-right: 10px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-pesquisa input:focus {
+    border-color: #007bff;
+}
+
+.form-pesquisa button {
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-pesquisa button:hover {
+    background-color: #0056b3;
+}
+
+/* Tabela de Compras */
+.table-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.compras-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.compras-table th, .compras-table td {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+}
+
+.compras-table th {
+    background-color: #007BFF;
+    color: white;
+    text-transform: uppercase;
+}
+
+.compras-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.compras-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos de Paginação */
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination .step-links a {
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 25px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.pagination .step-links a:hover {
+    background-color: #0056b3;
+}
+
+.pagination .step-links .current {
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 25px;
+    font-weight: bold;
+}
