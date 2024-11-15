@@ -1,7 +1,13 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+<div class="lista-producoes">
   <h1>Lista de Produções</h1>
+
+  <header>
+    <link rel="stylesheet" href="{% static 'css/producao/listar_producoes.css' %}">
+  </header>
+
 
   {% if producoes %}
     <table>
@@ -22,9 +28,9 @@
             <td>{{ producao.data }}</td> 
             <td>
               {% if producao.sucesso %}
-                <span style="color: green;">Concluída</span>
+                <span class="status-concluida">Concluída</span>
               {% else %}
-                <span style="color: red;">Pendente</span>
+                <span class="status-pendente">Pendente</span>
               {% endif %}
             </td>
             <td>
@@ -37,4 +43,5 @@
   {% else %}
     <p>Não há produções registradas.</p>
   {% endif %}
+</div>
 {% endblock %}

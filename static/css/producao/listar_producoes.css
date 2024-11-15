@@ -1,0 +1,79 @@
+/* Estilo para a tela de Listar Produções */
+.lista-producoes {
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 900px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título da tela */
+.lista-producoes h1 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Estilos para a tabela */
+.lista-producoes table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Estilos para as células da tabela */
+.lista-producoes th, .lista-producoes td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Cabeçalho da tabela */
+.lista-producoes th {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+}
+
+/* Linhas da tabela */
+.lista-producoes td {
+    background-color: #f9f9f9;
+}
+
+/* Status de produção (Concluída/Pendente) */
+.lista-producoes td span {
+    font-weight: bold;
+}
+
+.lista-producoes .status-concluida {
+    color: green;
+}
+
+.lista-producoes .status-pendente {
+    color: red;
+}
+
+/* Links de ação */
+.lista-producoes a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.lista-producoes a:hover {
+    color: #45a049;
+}
+
+/* Mensagem quando não houver produções */
+.lista-producoes p {
+    color: #555;
+    font-size: 16px;
+    text-align: center;
+    font-style: italic;
+}

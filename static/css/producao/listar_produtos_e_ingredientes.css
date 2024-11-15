@@ -1,0 +1,69 @@
+/* Estilos específicos para a página de listar produtos e ingredientes */
+.lista-produtos-ingredientes h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Estilização da Tabela */
+.lista-produtos-ingredientes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.lista-produtos-ingredientes th,
+.lista-produtos-ingredientes td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.lista-produtos-ingredientes th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.lista-produtos-ingredientes td {
+    background-color: #f9f9f9;
+}
+
+/* Estilo da Lista de Ingredientes */
+.lista-produtos-ingredientes ul {
+    padding-left: 20px;
+}
+
+.lista-produtos-ingredientes li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Estilo do Botão de Remover */
+.lista-produtos-ingredientes button.btn-danger {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.lista-produtos-ingredientes button.btn-danger:hover {
+    background-color: #e60000;
+}
+
+/* Estilo do formulário de remoção */
+.lista-produtos-ingredientes form {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+/* Mensagem quando não houver ingredientes */
+.lista-produtos-ingredientes td ul li {
+    color: #999;
+    font-style: italic;
+}

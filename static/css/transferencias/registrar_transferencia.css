@@ -1,0 +1,89 @@
+/* Estilos gerais para a página de registrar transferência */
+.registrar-transferencia {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título da tela */
+.registrar-transferencia h1 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo do formulário */
+.registrar-transferencia form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo dos campos do formulário */
+.registrar-transferencia form input,
+.registrar-transferencia form select,
+.registrar-transferencia form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Estilo do botão de submit */
+.registrar-transferencia form button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.registrar-transferencia form button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo do link de voltar */
+.registrar-transferencia a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.registrar-transferencia a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para o CSRF Token */
+.registrar-transferencia form input[type="hidden"] {
+    display: none;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .registrar-transferencia h1 {
+        font-size: 24px;
+    }
+
+    .registrar-transferencia form {
+        gap: 10px;
+    }
+
+    .registrar-transferencia form input,
+    .registrar-transferencia form select,
+    .registrar-transferencia form button {
+        font-size: 14px;
+    }
+}

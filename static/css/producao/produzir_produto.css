@@ -1,0 +1,86 @@
+/* Estilos gerais para a tela de Produzir Produto */
+.produzir-produto {
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.produzir-produto h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilizando o formulário */
+.produzir-produto form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo dos labels */
+.produzir-produto label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
+}
+
+/* Estilo dos inputs e selects */
+.produzir-produto select,
+.produzir-produto input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.produzir-produto select:focus,
+.produzir-produto input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+}
+
+/* Estilo do botão */
+.produzir-produto button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+.produzir-produto button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Estilo da mensagem de erro ou sucesso */
+.produzir-produto .messages {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.produzir-produto .messages p {
+    margin: 0;
+}
+
+/* Estilo da mensagem de sucesso */
+.produzir-produto .messages.success {
+    background-color: #d4edda;
+    color: #155724;
+}

@@ -10,6 +10,7 @@ class Transferencia(models.Model):
     estoque = models.ForeignKey(Estoque, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     tipo_transferencia = models.CharField(max_length=20, choices=TIPO_TRANSFERENCIA)
+    data_transferencia = models.DateTimeField(auto_now_add=True)  # Adicionando o campo de data
 
     def __str__(self):
         return f"Transferência de {self.quantidade} unidades de {self.estoque.produto.nome} de {self.tipo_transferencia}"
@@ -43,4 +44,3 @@ class Transferencia(models.Model):
 
             else:
                 raise ValueError("Quantidade insuficiente no estoque de origem (Avarias)")
-

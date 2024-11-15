@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Registrar Transferência{% endblock %}
 {% block content %}
-    <h1>Registrar Transferência de Estoque</h1>
+{% load static %}
+<header>
+    <link rel="stylesheet" href="{% static 'css/transferencias/registrar_transferencia.css' %}">
+</header>
+    <div class="registrar-transferencia">
+        <h1>Registrar Transferência de Estoque</h1>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar Transferência</button>
-    </form>
-    
-    <br>
-    <a href="{% url 'listar_transferencias' %}">Voltar para a lista de transferências</a>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Registrar Transferência</button>
+        </form>
+
+        <br>
+        <a href="{% url 'listar_transferencias' %}">Voltar para a lista de transferências</a>
+    </div>
 {% endblock %}

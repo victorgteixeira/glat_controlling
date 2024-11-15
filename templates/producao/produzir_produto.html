@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}Produzir Produto{% endblock %}
-
+{% load static %}
 {% block content %}
+<div class="produzir-produto">
     <h2>Produzir Produto</h2>
+    
+<header>
+    <link rel="stylesheet" href="{% static 'css/producao/produzir_produto.css' %}">
+</header>
     
     <form method="POST">
         {% csrf_token %}
@@ -28,4 +33,5 @@
             {% endfor %}
         </div>
     {% endif %}
+</div>
 {% endblock %}

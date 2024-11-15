@@ -1,34 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Cadastrar Ingredientes para Produção</h1>
 
-<form method="post">
-    {% csrf_token %}
-    <label for="produto_final">Produto Final:</label>
-    <select name="produto_final" id="produto_final">
-        {% for produto in produtos %}
-            <option value="{{ produto.id }}">{{ produto.nome }}</option>
-        {% endfor %}
-    </select>
+{% load static %}
+<h1 class="page-title">Cadastrar Ingredientes para Produção</h1>
 
-    <label for="ingrediente">Ingrediente:</label>
-    <select name="ingrediente" id="ingrediente">
-        {% for produto in produtos %}
-            <option value="{{ produto.id }}">{{ produto.nome }}</option>
-        {% endfor %}
-    </select>
+<header>
+    <link rel="stylesheet" href="{% static 'css/producao/cadastrar_ingredientes.css' %}">
+</header>
 
-    <label for="quantidade_necessaria">Quantidade Necessária:</label>
-    <input type="number" name="quantidade_necessaria" id="quantidade_necessaria" step="0.01" required>
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        
+        <label class="form-label" for="produto_final">Produto Final:</label>
+        <select class="form-select" name="produto_final" id="produto_final">
+            {% for produto in produtos %}
+                <option value="{{ produto.id }}">{{ produto.nome }}</option>
+            {% endfor %}
+        </select>
 
-    <button type="submit">Adicionar Ingrediente</button>
-</form>
+        <label class="form-label" for="ingrediente">Ingrediente:</label>
+        <select class="form-select" name="ingrediente" id="ingrediente">
+            {% for produto in produtos %}
+                <option value="{{ produto.id }}">{{ produto.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="form-label" for="quantidade_necessaria">Quantidade Necessária:</label>
+        <input class="form-input" type="number" name="quantidade_necessaria" id="quantidade_necessaria" step="0.01" required>
+
+        <button class="form-button" type="submit">Adicionar Ingrediente</button>
+    </form>
+</div>
 
 {% if messages %}
-    <ul>
+    <ul class="message-list">
         {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <li class="message-item{% if message.tags %} {{ message.tags }}{% endif %}">{{ message }}</li>
         {% endfor %}
     </ul>
 {% endif %}

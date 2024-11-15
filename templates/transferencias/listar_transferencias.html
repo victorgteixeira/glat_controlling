@@ -1,29 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Listar Transferências{% endblock %}
+{% load static %}
 {% block content %}
-    <h1>Transferências Realizadas</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Tipo de Transferência</th>
-                <th>Data</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for transferencia in transferencias %}
+<header>
+    <link rel="stylesheet" href="{% static 'css/transferencias/listar_transferencias.css' %}">
+</header>
+
+    <div class="listar-transferencias">
+        <h1>Transferências Realizadas</h1>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ transferencia.estoque_origem.produto.nome }}</td>
-                    <td>{{ transferencia.quantidade }}</td>
-                    <td>{{ transferencia.get_tipo_transferencia_display }}</td>
-                    <td>{{ transferencia.data_transferencia }}</td>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Tipo de Transferência</th>
+                    <th>Data</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">Nenhuma transferência registrada.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for transferencia in transferencias %}
+                    <tr>
+                        <td>{{ transferencia.estoque.produto.nome }}</td>
+                        <td>{{ transferencia.quantidade }}</td>
+                        <td>{{ transferencia.get_tipo_transferencia_display }}</td>
+                        <td>{{ transferencia.data_transferencia }}</td>
+                    </tr>
+                {% empty %}
+                    <tr class="empty">
+                        <td colspan="4">Nenhuma transferência registrada.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

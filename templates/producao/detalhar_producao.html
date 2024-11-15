@@ -1,20 +1,25 @@
 {% extends "base.html" %}
-
-
+{% load static %}
 {% block content %}
+<div class="detalhar-producao">
   <h1>Detalhes da Produção</h1>
+
+  <header>
+    <link rel="stylesheet" href="{% static 'css/producao/detalhar_producao.css' %}">
+  </header>
   
   <p><strong>Produto Final:</strong> {{ producao.produto_final.nome }}</p>
   <p><strong>Quantidade Produzida:</strong> {{ producao.quantidade }}</p>
   <p><strong>Data da Produção:</strong> {{ producao.data_criacao }}</p>
   <p><strong>Status:</strong> 
     {% if producao.sucesso %}
-      <span style="color: green;">Concluída</span>
+      <span class="status-concluida">Concluída</span>
     {% else %}
-      <span style="color: red;">Pendente</span>
+      <span class="status-pendente">Pendente</span>
     {% endif %}
   </p>
   <p><strong>Mensagem:</strong> {{ producao.mensagem }}</p>
   
   <a href="{% url 'listar_producoes' %}">Voltar para a lista de produções</a>
+</div>
 {% endblock %}
