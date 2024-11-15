@@ -12,7 +12,9 @@
         <h2>Lista de Baixas por Perda</h2>
         <form method="get" class="form-pesquisa">
             <input type="text" name="search" value="{{ search_query }}" placeholder="Pesquisar por produto" class="input-pesquisa">
-            <button type="submit" class="btn-pesquisar">Pesquisar</button>
+            <button type="submit">
+                <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+            </button>
         </form>
     </header>
     <a href="{% url 'registrar_baixa' %}" class="btn-adicionar">Nova Baixa por Perda</a>

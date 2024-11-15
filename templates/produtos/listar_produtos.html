@@ -10,7 +10,7 @@
 <div class="product-table-container">
 
     <div class="search-container">
-        <form method="get" action="{% url 'listar_produtos' %}">
+        <form method="get" action="{% url 'listar_produtos' %}" class="form-pesquisa">
             <input 
                 type="text" 
                 name="search" 
@@ -19,9 +19,12 @@
                 value="{{ request.GET.search|default:'' }}" 
                 class="search-bar"
             />
-            <button type="submit" class="search-button">🔍</button>
+            <button type="submit">
+                <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+            </button>
         </form>
     </div>
+
     <a href="{% url 'adicionar_produto' %}" class="add-product-button">+ Adicionar Novo Produto</a>
 
     <table class="product-table">

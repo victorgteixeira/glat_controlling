@@ -41,8 +41,6 @@ h1 {
 }
 
 .form-pesquisa button {
-    padding: 10px;
-    background-color: #007BFF;
     border: none;
     border-radius: 25px;
     cursor: pointer;
@@ -51,6 +49,10 @@ h1 {
 
 .form-pesquisa button:hover {
     background-color: #0056b3;
+}
+
+.search-icon {
+    max-width: 44px;
 }
 
 /* Tabela de Compras */
