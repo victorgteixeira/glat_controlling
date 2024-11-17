@@ -23,12 +23,13 @@ def adicionar_produto(request):
 
 def listar_produtos(request):
     search_query = request.GET.get('search', '') 
+    ultimos_alterados = Produto.objects.order_by('-data_atualizacao')[:3]
     produtos = Produto.objects.all()
 
     if search_query:
         produtos = produtos.filter(Q(nome__icontains=search_query))
 
-    paginator = Paginator(produtos, 3)
+    paginator = Paginator(produtos, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -36,6 +37,7 @@ def listar_produtos(request):
         'produtos': produtos,
         'search_query': search_query,
         'page_obj': page_obj,
+        'ultimos_alterados': ultimos_alterados,
     }
     return render(request, 'produtos/listar_produtos.html', context)
 

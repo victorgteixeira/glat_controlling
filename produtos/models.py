@@ -33,6 +33,14 @@ class Produto(models.Model):
             self.codigo = self.gerar_codigo()
         super().save(*args, **kwargs)
 
+    @classmethod
+    def buscar_por_codigo(cls, codigo):
+        """Método de classe para buscar um produto pelo código"""
+        try:
+            return cls.objects.get(codigo=codigo)
+        except cls.DoesNotExist:
+            return None
+
 
 class HistoricoProduto(models.Model):
     produto = models.ForeignKey(Produto, related_name='historico', on_delete=models.CASCADE)

@@ -4,6 +4,9 @@ from .forms import VendaForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.utils.dateparse import parse_date
+from django.http import JsonResponse
+from .models import Produto
 
 def registrar_venda(request):
     if request.method == "POST":
@@ -24,14 +27,34 @@ def registrar_venda(request):
 
 def listar_vendas(request):
     query = request.GET.get('q', '')
-    
+    data_inicial = request.GET.get('data_inicial', '')
+    data_final = request.GET.get('data_final', '')
+    ultimos_alterados_vendas = Venda.objects.order_by('-data_venda')[:3]
+
+    vendas = Venda.objects.all()
+
     if query:
-        vendas = Venda.objects.filter(Q(produto__nome__icontains=query))
-    else:
-        vendas = Venda.objects.all()
-    
+        vendas = vendas.filter(Q(produto__nome__icontains=query))
+
+    if data_inicial:
+        data_inicial = parse_date(data_inicial)
+        if data_inicial:
+            vendas = vendas.filter(data_venda__date__gte=data_inicial)
+    if data_final:
+        data_final = parse_date(data_final)
+        if data_final:
+            vendas = vendas.filter(data_venda__date__lte=data_final)
+
     paginator = Paginator(vendas, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
-    return render(request, 'vendas/listar_vendas.html', {'vendas': page_obj, 'query': query})
+
+    context = {
+        'vendas': page_obj,
+        'query': query,
+        'data_inicial': data_inicial,
+        'data_final': data_final,
+        'ultimos_alterados_vendas': ultimos_alterados_vendas,
+    }
+
+    return render(request, 'vendas/listar_vendas.html', context)

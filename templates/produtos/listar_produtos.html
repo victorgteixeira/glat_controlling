@@ -3,38 +3,72 @@
 {% load static %}
 
 {% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <span class="divider">›</span>
+    <a href="{% url 'listar_produtos' %}">
+        <i class="fas fa-box"></i> Produtos
+    </a>
+    <span class="divider">›</span>
+    <span class="current">
+        <i class="fas fa-list"></i> Listar Produtos
+    </span>
+</div>
+
+<h3>Últimos Itens Alterados</h3>
+<div class="recent-items">
+    {% for produto in ultimos_alterados %}
+    <div class="recent-item">
+        <h4>🟢{{ produto.nome }}</h4>
+        <p>Atualizado em: {{ produto.data_atualizacao|date:"d/m/Y H:i" }}</p>
+        <p>Preço: R$ {{ produto.preco }}</p>
+        <a href="{% url 'editar_produto' produto.id %}" class="button">✎ Editar</a>
+    </div>
+    {% endfor %}
+ </div>
+
 <link rel="stylesheet" href="{% static 'css/produtos/listar_produto.css' %}">
 <script src="{% static 'js/produtos/listar_produtos.js' %}"></script>
-<h2 class="page-title">Lista de Produtos</h2>
+<h2 class="page-title">
+    <div class="title-container">
+        <span>Lista de Produtos</span>
+        <div class="floating-image">
+            <img src="{% static 'css/icons/caixa.png' %}" alt="Imagem decorativa">
+        </div>
+    </div>
+</h2>
+
+<div class="search-container">
+    <form method="get" action="{% url 'listar_produtos' %}" class="form-pesquisa">
+        <input 
+            type="text" 
+            name="search" 
+            id="search-bar" 
+            placeholder="Digite o nome do produto..." 
+            value="{{ request.GET.search|default:'' }}" 
+            class="search-bar"
+        />
+        <button type="submit">
+            <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+        </button>
+    </form>
+</div>
 
 <div class="product-table-container">
 
-    <div class="search-container">
-        <form method="get" action="{% url 'listar_produtos' %}" class="form-pesquisa">
-            <input 
-                type="text" 
-                name="search" 
-                id="search-bar" 
-                placeholder="Digite o nome do produto..." 
-                value="{{ request.GET.search|default:'' }}" 
-                class="search-bar"
-            />
-            <button type="submit">
-                <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
-            </button>
-        </form>
-    </div>
-
-    <a href="{% url 'adicionar_produto' %}" class="add-product-button">+ Adicionar Novo Produto</a>
-
+    <a href="{% url 'adicionar_produto' %}" class="add-product-button" >+ Adicionar Novo Produto</a>
+    
     <table class="product-table">
         <thead>
             <tr>
+                <th>Código</th>
                 <th>Nome</th>
                 <th>Código EAN</th>
-                <th>Descrição</th>
-                <th>Quantidade</th>
                 <th>Fornecedor</th>
+                <th>Data Criação</th>
+                <th>Ultima atualização</th>
                 <th>Preço</th>
                 <th>Status</th>
                 <th class="action-column">Ações</th>
@@ -43,11 +77,12 @@
         <tbody>
             {% for produto in produtos %}
             <tr>
+                <td>{{ produto.codigo }}</td>
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.ean }}</td>
-                <td>{{ produto.descricao }}</td>
-                <td>{{ produto.quantidade }}</td>
                 <td>{{ produto.fornecedor.nome }}</td>
+                <td>{{ produto.data_criacao|date:"d/m/Y H:i" }}</td>
+                <td>{{ produto.data_atualizacao|date:"d/m/Y H:i" }}</td>
                 <td>R$ {{ produto.preco }}</td>
                 <td>
                     {% if produto.ativo %}
@@ -68,7 +103,7 @@
             {% endfor %}
         </tbody>
     </table>
-
+    
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
@@ -86,6 +121,6 @@
             {% endif %}
         </span>
     </div>
-    
 </div>
+
 {% endblock %}
