@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Editar Produto{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/produtos/adicionar_produto.css' %}">
+
+<div class="container">
+    <h1 class="page-title">Editar Produto</h1>
+    
+    <form method="post" enctype="multipart/form-data" class="product-form">
+        {% csrf_token %}
+        
+        <div class="form-row">
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="{{ form.nome.id_for_label }}">Nome</label>
+                    {{ form.nome }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.ean.id_for_label }}">EAN</label>
+                    {{ form.ean }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+                    {{ form.descricao }}
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="{{ form.un_medida.id_for_label }}">Unidade de Medida</label>
+                    {{ form.un_medida }}
+                </div>
+
+                <div class="form-group">
+                    <label for="search-fornecedor">Fornecedor</label>
+                    <div class="input-group">
+                        <input type="text" id="search-fornecedor" class="form-control" placeholder="Digite o nome do fornecedor" 
+                               value="{{ produto.fornecedor.nome|default:'' }}">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='/fornecedores/adicionar/'">+</button>
+                        </div>
+                    </div>
+                    <ul id="fornecedor-suggestions" class="suggestions-list"></ul>
+                    <input type="hidden" name="fornecedor" id="id_fornecedor" value="{{ produto.fornecedor.id|default:'' }}">
+                </div>     
+
+                <div class="form-group">
+                    <label for="{{ form.preco.id_for_label }}">Preço</label>
+                    {{ form.preco }}
+                </div>
+                <div class="form-group">
+                    <label for="id_ativo">Status</label>
+                    <select name="ativo" id="id_ativo" class="form-control">
+                        <option value="True" {% if form.ativo.value == 'True' %}selected{% endif %}>Ativo</option>
+                        <option value="False" {% if form.ativo.value == 'False' %}selected{% endif %}>Inativo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Salvar Produto</button>
+            <a href="{% url 'listar_produtos' %}" class="cancelar-a">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('search-fornecedor').addEventListener('input', function() {
+        var query = this.value.trim();
+        var suggestionsList = document.getElementById('fornecedor-suggestions');
+        suggestionsList.innerHTML = '';  
+
+        if (query === '') {
+            return;
+        }
+
+        fetch(`/produtos/buscar-fornecedores/?q=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    data.forEach(fornecedor => {
+                        var li = document.createElement('li');
+                        li.textContent = fornecedor.nome;
+                        li.dataset.id = fornecedor.id;
+
+                        li.addEventListener('click', function() {
+                            document.getElementById('search-fornecedor').value = fornecedor.nome;
+                            document.getElementById('id_fornecedor').value = fornecedor.id;
+                            suggestionsList.innerHTML = '';
+                        });
+
+                        suggestionsList.appendChild(li);
+                    });
+                } else {
+                    var li = document.createElement('li');
+                    li.textContent = 'Nenhum fornecedor encontrado';
+                    li.classList.add('no-results');
+                    suggestionsList.appendChild(li);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao buscar fornecedores:', error);
+            });
+    });
+</script>
+{% endblock %}

@@ -1,45 +1,44 @@
 {% extends "base.html" %}
+
 {% block title %}Itens do Fornecedor - {{ fornecedor.nome }}{% endblock %}
 {% load static %}
-{% block content %}
-<link rel="stylesheet" href="{% static 'css/fornecedores/consultar_itens.css' %}">
-<h2 class="page-title">Itens do Fornecedor: {{ fornecedor.nome }}</h2>
 
-<div class="produtos-table-container">
-    <table class="produtos-table">
-        <thead>
+{% block content %}
+<h2 class="text-3xl font-semibold mb-6">Itens do Fornecedor: {{ fornecedor.nome }}</h2>
+
+<div class="overflow-x-auto bg-white shadow-lg rounded-lg p-4">
+    <table class="min-w-full table-auto">
+        <thead class="bg-gray-100">
             <tr>
-                <th>Nome do Produto</th>
-                <th>Código do Produto</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Data de Cadastro</th>
-                <th>Ações</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Nome do Produto</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Código do Produto</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Preço</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Quantidade</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Data de Cadastro</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Ações</th>
             </tr>
         </thead>
         <tbody>
             {% for produto in produtos %}
-            <tr>
-                <td>{{ produto.nome }}</td>
-                <td>{{ produto.codigo }}</td>
-                <td>R$ {{ produto.preco|floatformat:2 }}</td>
-                <td>{{ produto.quantidade }}</td>
-                <td>{{ produto.data_criacao }}</td>
-                <td class="action-column">
-                    <div class="action-buttons">
-                        <a href="{% url 'editar_produto' produto.id %}" class="button">✎ Editar</a>
-                    </div>
+            <tr class="border-b">
+                <td class="px-4 py-2 text-sm text-gray-700">{{ produto.nome }}</td>
+                <td class="px-4 py-2 text-sm text-gray-700">{{ produto.codigo }}</td>
+                <td class="px-4 py-2 text-sm text-gray-700">R$ {{ produto.preco|floatformat:2 }}</td>
+                <td class="px-4 py-2 text-sm text-gray-700">{{ produto.quantidade }}</td>
+                <td class="px-4 py-2 text-sm text-gray-700">{{ produto.data_criacao }}</td>
+                <td class="px-4 py-2 text-sm text-gray-700">
+                    <a href="{% url 'editar_produto' produto.id %}" class="text-blue-500 hover:text-blue-700">✎ Editar</a>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6">Nenhum item encontrado para este fornecedor.</td>
+                <td colspan="6" class="px-4 py-2 text-center text-sm text-gray-600">Nenhum item encontrado para este fornecedor.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 
-<a href="{% url 'lista_fornecedores' %}" class="back-button">Voltar para a lista de Fornecedores</a>
+<a href="{% url 'lista_fornecedores' %}" class="mt-6 inline-block text-sm text-blue-500 hover:text-blue-700">Voltar para a lista de Fornecedores</a>
 
 {% endblock %}

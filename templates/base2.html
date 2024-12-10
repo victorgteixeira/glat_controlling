@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GLAT CONTROLLING{% endblock %}</title>
+    
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    <script src="{% static 'js/base.js' %}" defer></script>
+</head>
+<body class="body-layout">
+    <header class="header">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-img">
+        <h1 class="header-title">GLAT CONTROLLING</h1>
+        <div class="user-info">
+            <span class="username">{{ user.username }}</span>
+            {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>            
+            {% else %}
+                <a href="{% url 'login' %}" class="logout-button">Login</a>
+            {% endif %}
+        </div>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <nav class="menu-container" id="menuContainer">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="menu" id="menu">
+            <ul>
+                <ul>
+                    <a class="a-home" href="{% url 'home' %}">Home</a>
+                </ul>
+
+                <li class="menu-title"><a class="menu-a" href="#">・ Produtos</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_produtos' %}">Listar Produtos</a></li>
+                        <li><a href="{% url 'adicionar_produto' %}">Adicionar Produtos</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Vendas</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_vendas' %}">Listar Vendas</a></li>
+                        <li><a href="{% url 'registrar_venda' %}">Adicionar Vendas</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Perdas</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_baixas' %}">Listar Perdas</a></li>
+                        <li><a href="{% url 'registrar_baixa' %}">Adicionar Perdas</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Compra</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'registrar_compra' %}">Registrar compra</a></li>
+                        <li><a href="{% url 'listar_compras' %}">Listar Compras</a></li>
+                        <li><a href="{% url 'lista_fornecedores' %}">Listar Fornecedor</a></li>
+                        <li><a href="{% url 'adicionar_fornecedor' %}">Adicionar Fornecedor</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Transferir/Produzir</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'registrar_transferencia' %}">Registrar Transferencia</a></li>
+                        <li><a href="{% url 'listar_transferencias' %}">Ultimas Transferencias</a></li>
+                        <li><a href="{% url 'cadastrar_ingredientes' %}">Cadastrar Ingredientes</a></li>
+                        <li><a href="{% url 'listar_produtos_e_ingredientes' %}">Listar Ingredientes</a></li>
+                        <li><a href="{% url 'produzir_produto' %}">Produzir Produto</a></li>
+                        <li><a href="{% url 'listar_producoes' %}">Listar Produções</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Estoques</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'estoque_produto' %}">Listar Estoque</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Clientes</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'lista_clientes' %}">Listar Clientes</a></li>
+                        <li><a href="{% url 'adicionar_cliente' %}">Cadastro Clientes</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        {% block content %}
+        <!-- Conteúdo dinâmico será carregado aqui -->
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        © 2024 GLAT. Todos os direitos reservados.
+    </footer>
+</body>
+</html>

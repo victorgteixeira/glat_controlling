@@ -1,46 +1,52 @@
 {% extends "base.html" %}
 {% block title %}Estoque de Produtos{% endblock %}
 {% load static %}
+
 {% block content %}
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/estoques/estoque.css' %}">
 </head>
-<body>
-    <div class="container">
-        <h1>Estoque de Produtos</h1>
-        
-        <!-- Botão de adicionar produto -->
-        <div class="add-product">
-            <a href="{% url 'adicionar_produto' %}" class="btn-add">Adicionar Produto</a>
-        </div>
 
-        <table>
+<div class="container mx-auto p-6">
+    <!-- Título da página -->
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Estoques</h1>
+    
+    <!-- Botão de adicionar produto -->
+    <div class="mb-6">
+        <a href="{% url 'adicionar_produto' %}" class="bg-teal-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition-all duration-300 ease-in-out transform hover:scale-105">
+            Adicionar Produto
+        </a>
+    </div>
+
+    <!-- Tabela de produtos e estoques -->
+    <div class="overflow-x-auto shadow-lg rounded-lg bg-white">
+        <table class="min-w-full table-auto border-separate border-spacing-0">
             <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Tipo de Estoque</th>
-                    <th>Quantidade</th>
+                <tr class="bg-teal-500 text-white">
+                    <th class="px-6 py-4 text-left text-sm font-medium">Produto</th>
+                    <th class="px-6 py-4 text-left text-sm font-medium">Tipo de Estoque</th>
+                    <th class="px-6 py-4 text-left text-sm font-medium">Quantidade</th>
                 </tr>
             </thead>
             <tbody>
                 {% for produto, estoques in produtos_estoques.items %}
                     {% for estoque in estoques %}
-                        <tr>
+                        <tr class="border-t hover:bg-gray-100 transition duration-200">
                             {% if forloop.first %}
-                                <td rowspan="{{ estoques|length }}">{{ produto.nome }}</td>
+                                <td rowspan="{{ estoques|length }}" class="px-6 py-4 text-sm text-gray-800 font-medium">{{ produto.nome }}</td>
                             {% endif %}
-                            <td>{{ estoque.tipo }}</td>  <!-- Aqui você acessa o tipo de estoque -->
-                            <td>{{ estoque.quantidade }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ estoque.tipo }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ estoque.quantidade }}</td>
                         </tr>
                     {% endfor %}
                 {% empty %}
                     <tr>
-                        <td colspan="3">Nenhum produto encontrado.</td>
+                        <td colspan="3" class="px-6 py-4 text-sm text-gray-600 text-center">Nenhum produto encontrado.</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-</body>
+</div>
+
 {% endblock %}

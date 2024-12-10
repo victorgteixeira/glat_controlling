@@ -3,60 +3,71 @@
 {% block content %}
 {% load static %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/baixas/listar_baixas.css' %}">
-</head>
-
-<div class="container">
-    <header>
-        <h2>Lista de Baixas por Perda</h2>
-        <form method="get" class="form-pesquisa">
-            <input type="text" name="search" value="{{ search_query }}" placeholder="Pesquisar por produto" class="input-pesquisa">
-            <button type="submit">
-                <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+<div class="container mx-auto p-6">
+    <!-- Cabeçalho com título e pesquisa -->
+    <header class="mb-6 flex justify-between items-center">
+        <h2 class="text-3xl font-semibold text-gray-900">Lista de Baixas por Perda</h2>
+        
+        <!-- Formulário de pesquisa -->
+        <form method="get" class="flex items-center space-x-2">
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Pesquisar por produto" class="border border-gray-300 rounded-lg p-2 w-60 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <button type="submit" class="text-teal-600 hover:text-teal-800">
+                <img class="w-6 h-6" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
             </button>
         </form>
     </header>
-    <a href="{% url 'registrar_baixa' %}" class="btn-adicionar">Nova Baixa por Perda</a>
-    <section class="tabela-baixas">
-        <table>
-            <thead>
+
+    <!-- Botão de adicionar nova baixa -->
+    <a href="{% url 'registrar_baixa' %}" class="bg-teal-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition duration-200 ease-in-out mb-6 inline-block">
+        Nova Baixa por Perda
+    </a>
+
+    <!-- Tabela de Baixas -->
+    <section class="bg-white shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full table-auto text-left">
+            <thead class="bg-teal-500 text-white">
                 <tr>
-                    <th>Produto</th>
-                    <th>Quantidade Perdida</th>
-                    <th>Valor da Perda</th>
-                    <th>Data</th>
+                    <th class="px-6 py-4 text-sm font-medium">Produto</th>
+                    <th class="px-6 py-4 text-sm font-medium">Quantidade Perdida</th>
+                    <th class="px-6 py-4 text-sm font-medium">Valor da Perda</th>
+                    <th class="px-6 py-4 text-sm font-medium">Data</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-gray-700">
                 {% for baixa in page_obj %}
-                <tr>
-                    <td>{{ baixa.produto.nome }}</td>
-                    <td>{{ baixa.quantidade_perdida }}</td>
-                    <td>{{ baixa.valor_perda|floatformat:2 }}</td>
-                    <td>{{ baixa.data_baixa }}</td>
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm">{{ baixa.produto.nome }}</td>
+                    <td class="px-6 py-4 text-sm">{{ baixa.quantidade_perdida }}</td>
+                    <td class="px-6 py-4 text-sm">{{ baixa.valor_perda|floatformat:2 }}</td>
+                    <td class="px-6 py-4 text-sm">{{ baixa.data_baixa }}</td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5">Nenhuma baixa encontrada.</td>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Nenhuma baixa encontrada.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </section>
 
-    <div class="pagination">
-        {% if page_obj.has_previous %}
-            <a href="?page=1&search={{ search_query }}" class="btn-paginacao">Primeira</a>
-            <a href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}" class="btn-paginacao">Anterior</a>
-        {% endif %}
-        <span class="current-page">
-            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-        </span>
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}&search={{ search_query }}" class="btn-paginacao">Próxima</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" class="btn-paginacao">Última</a>
-        {% endif %}
+    <!-- Paginação -->
+    <div class="mt-6 flex justify-between items-center">
+        <div>
+            {% if page_obj.has_previous %}
+                <a href="?page=1&search={{ search_query }}" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition duration-200 ease-in-out mr-2">Primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition duration-200 ease-in-out">Anterior</a>
+            {% endif %}
+        </div>
+
+        <span class="text-gray-600">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+        <div>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&search={{ search_query }}" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition duration-200 ease-in-out mr-2">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition duration-200 ease-in-out">Última</a>
+            {% endif %}
+        </div>
     </div>
 </div>
+
 {% endblock %}

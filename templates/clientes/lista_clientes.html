@@ -1,46 +1,43 @@
 {% extends "base.html" %}
 {% block title %}Listar Clientes{% endblock %}
 {% load static %}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <link rel="stylesheet" href="{% static 'css/clientes/lista_clients.css' %}">
-</head>
-<body>
-    <h1>Clientes</h1>
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Clientes</h1>
 
-    <a href="{% url 'adicionar_cliente' %}" class="btn">Adicionar Novo Cliente</a>
+    <a href="{% url 'adicionar_cliente' %}" class="px-6 py-2 text-white bg-green-600 hover:bg-green-700 rounded-md mb-4 inline-block">Adicionar Novo Cliente</a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for cliente in clientes %}
-            <tr>
-                <td>{{ cliente.nome }}</td>
-                <td>{{ cliente.email }}</td>
-                <td>{{ cliente.telefone }}</td>
-                <td>{{ cliente.endereco }}</td>
-                <td>
-                    <a href="{% url 'editar_cliente' cliente.id %}">Editar</a> |
-                    <a href="{% url 'excluir_cliente' cliente.id %}" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">Excluir</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">Nenhum cliente cadastrado.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-200 text-gray-700">
+                <tr>
+                    <th class="px-6 py-3 text-left">Nome</th>
+                    <th class="px-6 py-3 text-left">Email</th>
+                    <th class="px-6 py-3 text-left">Telefone</th>
+                    <th class="px-6 py-3 text-left">Endereço</th>
+                    <th class="px-6 py-3 text-left">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for cliente in clientes %}
+                <tr class="border-t">
+                    <td class="px-6 py-3">{{ cliente.nome }}</td>
+                    <td class="px-6 py-3">{{ cliente.email }}</td>
+                    <td class="px-6 py-3">{{ cliente.telefone }}</td>
+                    <td class="px-6 py-3">{{ cliente.endereco }}</td>
+                    <td class="px-6 py-3">
+                        <a href="{% url 'editar_cliente' cliente.id %}" class="text-blue-600 hover:text-blue-800">Editar</a> |
+                        <a href="{% url 'excluir_cliente' cliente.id %}" onclick="return confirm('Tem certeza que deseja excluir este cliente?');" class="text-red-600 hover:text-red-800">Excluir</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-3">Nenhum cliente cadastrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

@@ -1,13 +1,17 @@
 {% extends "base.html" %}
+
 {% block title %}Excluir Fornecedor{% endblock %}
 {% load static %}
-{% block content %}
-<h2>Confirmar Exclusão</h2>
-<p>Você tem certeza de que deseja excluir o fornecedor "{{ fornecedor.nome }}"?</p>
 
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit" class="button">Excluir</button>
-    <a href="{% url 'lista_fornecedores' %}" class="button">Cancelar</a>
-</form>
+{% block content %}
+<div class="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Confirmar Exclusão</h2>
+    <p class="text-sm text-gray-600 mb-6">Você tem certeza de que deseja excluir o fornecedor "<span class="font-semibold text-gray-900">{{ fornecedor.nome }}</span>"?</p>
+
+    <form method="POST" class="space-x-4">
+        {% csrf_token %}
+        <button type="submit" class="px-6 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Excluir</button>
+        <a href="{% url 'lista_fornecedores' %}" class="px-6 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

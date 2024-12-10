@@ -2,60 +2,60 @@
 
 {% block title %}Adicionar Produto{% endblock %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/produtos/adicionar_produto.css' %}">
-<div class="container">
-    <h1 class="page-title">Adicionar Produto</h1>
-    <form method="post" class="product-form" enctype="multipart/form-data">
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-3xl font-bold mb-6">Adicionar Produto</h1>
+    <form method="post" class="space-y-6" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-row">
-            <div class="form-column">
+
+        <!-- Grid de 2 colunas para telas médias e maiores -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Coluna 1 -->
+            <div class="space-y-4">
                 <div class="form-group">
-                    <label for="{{ form.nome.id_for_label }}">Nome</label>
-                    {{ form.nome }}
+                    <label for="{{ form.nome.id_for_label }}" class="block text-sm font-medium text-gray-700">Nome</label>
+                    {{ form.nome|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
                 </div>
 
                 <div class="form-group">
-                    <label for="{{ form.ean.id_for_label }}">EAN</label>
-                    {{ form.ean }}
+                    <label for="{{ form.ean.id_for_label }}" class="block text-sm font-medium text-gray-700">EAN</label>
+                    {{ form.ean|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
                 </div>
 
                 <div class="form-group">
-                    <label for="{{ form.descricao.id_for_label }}">Descrição</label>
-                    {{ form.descricao }}
+                    <label for="{{ form.descricao.id_for_label }}" class="block text-sm font-medium text-gray-700">Descrição</label>
+                    {{ form.descricao|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
                 </div>
             </div>
 
-            <hr class="divider">
-
-            <div class="form-column">
+            <!-- Coluna 2 -->
+            <div class="space-y-4">
                 <div class="form-group">
-                    <label for="{{ form.un_medida.id_for_label }}">Unidade de Medida</label>
-                    {{ form.un_medida }}
+                    <label for="{{ form.un_medida.id_for_label }}" class="block text-sm font-medium text-gray-700">Unidade de Medida</label>
+                    {{ form.un_medida|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
                 </div>
 
                 <div class="form-group">
-                    <label for="search-fornecedor">Fornecedor</label>
-                    <div class="input-group">
-                        <input type="text" id="search-fornecedor" class="form-control" placeholder="Digite o nome do fornecedor">
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='/fornecedores/adicionar/'">+</button>
-                        </div>
+                    <label for="search-fornecedor" class="block text-sm font-medium text-gray-700">Fornecedor</label>
+                    <div class="relative">
+                        <input type="text" id="search-fornecedor" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Digite o nome do fornecedor">
+                        <button type="button" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600" onclick="window.location.href='/fornecedores/adicionar/'">+</button>
                     </div>
-                    <ul id="fornecedor-suggestions" class="suggestions-list"></ul>
-                </div> 
+                    <ul id="fornecedor-suggestions" class="mt-2 bg-white border border-gray-300 rounded-lg shadow-lg"></ul>
+                </div>
 
                 <input type="hidden" name="fornecedor" id="id_fornecedor">
 
                 <div class="form-group">
-                    <label for="{{ form.preco.id_for_label }}">Preço</label>
-                    {{ form.preco }}
+                    <label for="{{ form.preco.id_for_label }}" class="block text-sm font-medium text-gray-700">Preço</label>
+                    {{ form.preco|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
                 </div>
 
                 <div class="form-group">
-                    <label for="id_ativo">Status</label>
-                    <select name="ativo" id="id_ativo" class="form-control">
+                    <label for="id_ativo" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="ativo" id="id_ativo" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
                         <option value="True" {% if form.ativo.value == 'True' %}selected{% endif %}>Ativo</option>
                         <option value="False" {% if form.ativo.value == 'False' %}selected{% endif %}>Inativo</option>
                     </select>
@@ -63,9 +63,9 @@
             </div>
         </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Salvar Produto</button>
-            <a href="{% url 'listar_produtos' %}" class="cancelar-a">Cancelar</a>
+        <div class="form-actions mt-8 flex justify-between items-center">
+            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Salvar Produto</button>
+            <a href="{% url 'listar_produtos' %}" class="text-blue-600 hover:text-blue-800">Cancelar</a>
         </div>
     </form>
 </div>

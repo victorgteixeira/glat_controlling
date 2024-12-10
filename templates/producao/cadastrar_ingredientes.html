@@ -3,41 +3,46 @@
 {% block content %}
 
 {% load static %}
-<h1 class="page-title">Cadastrar Ingredientes para Produção</h1>
 
-<header>
-    <link rel="stylesheet" href="{% static 'css/producao/cadastrar_ingredientes.css' %}">
-</header>
+<h1 class="text-3xl font-semibold text-gray-800 mb-6">Cadastrar Ingredientes para Produção</h1>
 
-<div class="form-container">
+<div class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
     <form method="post">
         {% csrf_token %}
         
-        <label class="form-label" for="produto_final">Produto Final:</label>
-        <select class="form-select" name="produto_final" id="produto_final">
-            {% for produto in produtos %}
-                <option value="{{ produto.id }}">{{ produto.nome }}</option>
-            {% endfor %}
-        </select>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700" for="produto_final">Produto Final:</label>
+            <select class="form-select mt-2 p-2 w-full border border-gray-300 rounded-md" name="produto_final" id="produto_final">
+                {% for produto in produtos %}
+                    <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <label class="form-label" for="ingrediente">Ingrediente:</label>
-        <select class="form-select" name="ingrediente" id="ingrediente">
-            {% for produto in produtos %}
-                <option value="{{ produto.id }}">{{ produto.nome }}</option>
-            {% endfor %}
-        </select>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700" for="ingrediente">Ingrediente:</label>
+            <select class="form-select mt-2 p-2 w-full border border-gray-300 rounded-md" name="ingrediente" id="ingrediente">
+                {% for produto in produtos %}
+                    <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <label class="form-label" for="quantidade_necessaria">Quantidade Necessária:</label>
-        <input class="form-input" type="number" name="quantidade_necessaria" id="quantidade_necessaria" step="0.01" required>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700" for="quantidade_necessaria">Quantidade Necessária:</label>
+            <input class="form-input mt-2 p-2 w-full border border-gray-300 rounded-md" type="number" name="quantidade_necessaria" id="quantidade_necessaria" step="0.01" required>
+        </div>
 
-        <button class="form-button" type="submit">Adicionar Ingrediente</button>
+        <button class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition" type="submit">Adicionar Ingrediente</button>
     </form>
 </div>
 
 {% if messages %}
-    <ul class="message-list">
+    <ul class="mt-4 space-y-2">
         {% for message in messages %}
-            <li class="message-item{% if message.tags %} {{ message.tags }}{% endif %}">{{ message }}</li>
+            <li class="message-item {% if message.tags %} {{ message.tags }}{% endif %} bg-gray-100 text-gray-800 p-3 rounded-md">
+                {{ message }}
+            </li>
         {% endfor %}
     </ul>
 {% endif %}

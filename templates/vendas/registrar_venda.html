@@ -2,69 +2,68 @@
 {% block title %}Registrar Venda{% endblock %}
 {% block content %}
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>Registrar Venda</title>
-    <link rel="stylesheet" href="{% static 'css/vendas/registrar_venda.css' %}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+{% load custom_filters %}
 
-<body>
+<!-- Breadcrumb -->
+<nav class="text-sm text-gray-600 mb-4">
+    <a href="{% url 'home' %}" class="hover:text-[#0891b2]"><i class="fas fa-home"></i> Home</a>
+    <span class="mx-2">›</span>
+    <a href="{% url 'listar_vendas' %}" class="hover:text-[#0891b2]"><i class="fas fa-box"></i> Listar vendas</a>
+    <span class="mx-2">›</span>
+    <span class="font-semibold"><i class="fas fa-list"></i> Registrar venda</span>
+</nav>
 
-<div class="breadcrumb">
-    <a href="{% url 'home' %}">
-        <i class="fas fa-home"></i> Home
-    </a>
-    <span class="divider">›</span>
-    <a href="{% url 'listar_vendas' %}">
-        <i class="fas fa-box"></i> Listar vendas
-    </a>
-    <span class="divider">›</span>
-    <span class="current">
-        <i class="fas fa-list"></i> Registrar venda
-    </span>
-</div>
+<!-- Container Principal -->
+<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
 
-<div class="container">
-    <header>
-        <h1 class="text-title-h1">Registrar Venda</h1>
+    <!-- Título -->
+    <header class="mb-6">
+        <h1 class="text-2xl font-bold text-[#155e75]">Registrar Venda</h1>
     </header>
 
+    <!-- Mensagens -->
     {% if messages %}
-        <div class="alert-container">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
+    <div class="mb-4">
+        {% for message in messages %}
+        <div class="p-4 mb-2 rounded text-white {% if message.tags == 'error' %}bg-red-500{% elif message.tags == 'success' %}bg-green-500{% else %}bg-gray-500{% endif %}">
+            {{ message }}
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
-    <form method="post" class="form-venda">
+    <!-- Formulário -->
+    <form method="post" class="space-y-4">
         {% csrf_token %}
-        
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-item">
-                    <label for="produto">Produto</label>
-                    {{ form.produto }}
-                </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Produto -->
+            <div>
+                <label for="produto" class="block text-sm font-medium text-gray-700">Produto</label>
+                {{ form.produto|add_class:"mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0891b2] focus:border-[#0891b2]" }}
             </div>
-            <div class="input-item">
-                <label for="quantidade">Quantidade</label>
-                {{ form.quantidade }}
+
+            <!-- Quantidade -->
+            <div>
+                <label for="quantidade" class="block text-sm font-medium text-gray-700">Quantidade</label>
+                {{ form.quantidade|add_class:"mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0891b2] focus:border-[#0891b2]" }}
             </div>
-            <div class="input-item">
-                <label for="valor">Preço</label>
-                {{ form.valor }}
+
+            <!-- Preço -->
+            <div>
+                <label for="valor" class="block text-sm font-medium text-gray-700">Preço</label>
+                {{ form.valor|add_class:"mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0891b2] focus:border-[#0891b2]" }}
             </div>
         </div>
-    
-        <div class="form-actions">
-            <button type="submit" class="btn-submit">Registrar Venda</button>
-            <a href="{% url 'listar_vendas' %}" class="btn-voltar">Voltar</a>
+
+        <!-- Botões -->
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="{% url 'listar_vendas' %}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Voltar</a>
+            <button type="submit" class="bg-[#0891b2] text-white px-4 py-2 rounded shadow hover:bg-[#155e75]">
+                Registrar Venda
+            </button>
         </div>
     </form>
-    
 </div>
 
-</body>
 {% endblock %}

@@ -3,34 +3,40 @@
 {% load static %}
 {% block content %}
 <header>
-    <link rel="stylesheet" href="{% static 'css/transferencias/listar_transferencias.css' %}">
+    <!-- Não é mais necessário incluir o CSS externo, pois o Tailwind já está integrado -->
 </header>
 
-    <div class="listar-transferencias">
-        <h1>Transferências Realizadas</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Tipo de Transferência</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for transferencia in transferencias %}
-                    <tr>
-                        <td>{{ transferencia.estoque.produto.nome }}</td>
-                        <td>{{ transferencia.quantidade }}</td>
-                        <td>{{ transferencia.get_tipo_transferencia_display }}</td>
-                        <td>{{ transferencia.data_transferencia }}</td>
-                    </tr>
-                {% empty %}
-                    <tr class="empty">
-                        <td colspan="4">Nenhuma transferência registrada.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="container mx-auto px-4 py-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Transferências Realizadas</h1>
+        <a href="{% url 'registrar_transferencia' %}" class="btn bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+            Registrar Transferência
+        </a>
     </div>
+    
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+        <thead>
+            <tr class="bg-gray-100 text-left">
+                <th class="py-3 px-4 text-sm font-medium text-gray-700">Produto</th>
+                <th class="py-3 px-4 text-sm font-medium text-gray-700">Quantidade</th>
+                <th class="py-3 px-4 text-sm font-medium text-gray-700">Tipo de Transferência</th>
+                <th class="py-3 px-4 text-sm font-medium text-gray-700">Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transferencia in transferencias %}
+                <tr class="border-t border-gray-200">
+                    <td class="py-3 px-4 text-sm text-gray-700">{{ transferencia.estoque.produto.nome }}</td>
+                    <td class="py-3 px-4 text-sm text-gray-700">{{ transferencia.quantidade }}</td>
+                    <td class="py-3 px-4 text-sm text-gray-700">{{ transferencia.get_tipo_transferencia_display }}</td>
+                    <td class="py-3 px-4 text-sm text-gray-700">{{ transferencia.data_transferencia }}</td>
+                </tr>
+            {% empty %}
+                <tr class="bg-gray-50">
+                    <td colspan="4" class="py-3 px-4 text-center text-sm text-gray-500">Nenhuma transferência registrada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

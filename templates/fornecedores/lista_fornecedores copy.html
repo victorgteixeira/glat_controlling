@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Lista de Fornecedores{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/fornecedores/listar_fornecedor.css' %}">
+<h2 class="page-title">Lista de Fornecedores</h2>
+
+<div class="fornecedor-table-container">
+    <a href="{% url 'adicionar_fornecedor' %}" class="add-fornecedor-button">Adicionar Novo Fornecedor</a>
+    <table class="fornecedor-table">
+        <thead>
+            <tr>
+                <th>Cóigo</th>
+                <th>Nome</th>
+                <th>CNPJ</th>
+                <th>Endereço</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th class="action-column">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fornecedor in fornecedores %}
+            <tr>
+                <td>{{ fornecedor.codigo }}</td>
+                <td>{{ fornecedor.nome }}</td>
+                <td>{{ fornecedor.cnpj }}</td>
+                <td>{{ fornecedor.endereco }}</td>
+                <td>{{ fornecedor.telefone }}</td>
+                <td>{{ fornecedor.email }}</td>
+                <td>
+                    {% if fornecedor.ativo %}
+                        <span class="badge badge-success">Ativo</span>
+                    {% else %}
+                        <span class="badge badge-danger">Inativo</span>
+                    {% endif %}
+                </td>
+                <td class="action-column">
+                    <div class="action-buttons">
+                        <a href="{% url 'editar_fornecedor' fornecedor.id %}" class="button">✎ Editar</a>
+                        <a href="{% url 'consultar_itens_fornecedor' fornecedor.id %}" class="button">📦 Ver Itens</a>
+                        <a href="{% url 'excluir_fornecedor' fornecedor.id %}" class="button">🗑 Excluir</a>                        
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Nenhum fornecedor encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

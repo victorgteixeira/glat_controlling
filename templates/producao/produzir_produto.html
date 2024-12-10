@@ -2,34 +2,35 @@
 
 {% block title %}Produzir Produto{% endblock %}
 {% load static %}
+
 {% block content %}
-<div class="produzir-produto">
-    <h2>Produzir Produto</h2>
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg max-w-lg">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Produzir Produto</h2>
     
-<header>
-    <link rel="stylesheet" href="{% static 'css/producao/produzir_produto.css' %}">
-</header>
-    
-    <form method="POST">
+    <form method="POST" class="space-y-4">
         {% csrf_token %}
-        
-        <label for="produto_final">Produto Final:</label>
-        <select id="produto_final" name="produto_final" required>
-            {% for produto in produtos %}
-                <option value="{{ produto.id }}">{{ produto.nome }}</option>
-            {% endfor %}
-        </select>
-        
-        <label for="quantidade">Quantidade a Produzir:</label>
-        <input type="number" id="quantidade" name="quantidade" min="1" required>
-        
-        <button type="submit">Produzir</button>
+
+        <div class="form-group">
+            <label for="produto_final" class="block text-lg text-gray-700">Produto Final:</label>
+            <select id="produto_final" name="produto_final" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                {% for produto in produtos %}
+                    <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantidade" class="block text-lg text-gray-700">Quantidade a Produzir:</label>
+            <input type="number" id="quantidade" name="quantidade" min="1" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300">Produzir</button>
     </form>
-    
+
     {% if messages %}
-        <div class="messages">
+        <div class="mt-4 space-y-2">
             {% for message in messages %}
-                <p>{{ message }}</p>
+                <p class="text-red-600 text-sm">{{ message }}</p>
             {% endfor %}
         </div>
     {% endif %}

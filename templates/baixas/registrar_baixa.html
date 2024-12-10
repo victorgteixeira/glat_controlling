@@ -5,20 +5,19 @@
 
 {% block content %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/baixas/registrar_baixa.css' %}">
-</head>
+<h2 class="text-3xl font-semibold text-gray-900 mb-6">Registrar Baixa por Perda</h2>
 
-<h2>Registrar Baixa por Perda</h2>
-
-<form method="post" class="form-registrar-baixa">
+<form method="post" class="space-y-6">
     {% csrf_token %}
-    
+
+    <!-- Produto -->
     <div class="form-group">
-        <label for="{{ form.produto.id_for_label }}">Produto</label>
-        {{ form.produto }}
+        <label for="{{ form.produto.id_for_label }}" class="block text-sm font-medium text-gray-700">Produto</label>
+        <div class="mt-1">
+            {{ form.produto }}
+        </div>
         {% if form.produto.errors %}
-            <div class="error-message">
+            <div class="mt-2 text-sm text-red-600">
                 {% for error in form.produto.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
@@ -26,11 +25,14 @@
         {% endif %}
     </div>
 
+    <!-- Quantidade Perdida -->
     <div class="form-group">
-        <label for="{{ form.quantidade_perdida.id_for_label }}">Quantidade Perdida</label>
-        {{ form.quantidade_perdida }}
+        <label for="{{ form.quantidade_perdida.id_for_label }}" class="block text-sm font-medium text-gray-700">Quantidade Perdida</label>
+        <div class="mt-1">
+            {{ form.quantidade_perdida }}
+        </div>
         {% if form.quantidade_perdida.errors %}
-            <div class="error-message">
+            <div class="mt-2 text-sm text-red-600">
                 {% for error in form.quantidade_perdida.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
@@ -38,29 +40,37 @@
         {% endif %}
     </div>
 
+    <!-- Valor da Perda -->
     <div class="form-group">
-        <label for="{{ form.valor_perda.id_for_label }}">Valor da Perda</label>
-        {{ form.valor_perda }}
+        <label for="{{ form.valor_perda.id_for_label }}" class="block text-sm font-medium text-gray-700">Valor da Perda</label>
+        <div class="mt-1">
+            {{ form.valor_perda }}
+        </div>
         {% if form.valor_perda.errors %}
-            <div class="error-message">
+            <div class="mt-2 text-sm text-red-600">
                 {% for error in form.valor_perda.errors %}
                     <p>{{ error }}</p>
                 {% endfor %}
             </div>
         {% endif %}
     </div>
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
 
-    <div class="form-actions">
-        <button type="submit" class="btn-submit">Registrar Baixa</button>
+    <!-- Mensagens de erro -->
+    {% if messages %}
+        <div class="space-y-4">
+            {% for message in messages %}
+                <div class="bg-{{ message.tags }}-100 border-l-4 border-{{ message.tags }}-500 text-{{ message.tags }}-700 p-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Botão de Submit -->
+    <div class="form-actions flex justify-end">
+        <button type="submit" class="bg-teal-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition duration-200 ease-in-out">
+            Registrar Baixa
+        </button>
     </div>
 </form>
 

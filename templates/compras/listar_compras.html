@@ -1,63 +1,61 @@
 {% extends "base.html" %}
+
 {% block title %}Lista de Compras{% endblock %}
 {% block content %}
 {% load static %}
-<h1>Lista de Compras</h1>
 
-<header>
-    <link rel="stylesheet" href="{% static 'css/compras/listar_compras.css' %}">
-</header>
+<h1 class="text-3xl font-semibold text-gray-900 mb-6">Lista de Compras</h1>
 
-<div class="search-container">
-    <form method="get" class="form-pesquisa">
-        <input type="text" name="q" value="{{ query }}" placeholder="Pesquisar por produto, quantidade ou data">
-        <button type="submit">
-            <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+<div class="mb-6">
+    <form method="get" class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+        <input type="text" name="q" value="{{ query }}" placeholder="Pesquisar por produto, quantidade ou data" class="w-full px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-teal-600" />
+        <button type="submit" class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700">
+            <img class="w-5 h-5" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
         </button>
     </form>
 </div>
 
 {% if compras %}
-    <div class="table-container">
-        <table class="compras-table">
-            <thead>
+    <div class="overflow-x-auto shadow rounded-lg">
+        <table class="min-w-full bg-white table-auto border-collapse">
+            <thead class="bg-teal-600 text-white">
                 <tr>
-                    <th>Produto</th>
-                    <th>Quantidade Comprada</th>
-                    <th>Data da Compra</th>
+                    <th class="px-4 py-2 text-left">Produto</th>
+                    <th class="px-4 py-2 text-left">Quantidade Comprada</th>
+                    <th class="px-4 py-2 text-left">Data da Compra</th>
                 </tr>
             </thead>
             <tbody>
                 {% for compra in compras %}
-                    <tr>
-                        <td>{{ compra.produto.nome }}</td>
-                        <td>{{ compra.quantidade_comprada }}</td>
-                        <td>{{ compra.data_compra }}</td>
+                    <tr class="border-t">
+                        <td class="px-4 py-2">{{ compra.produto.nome }}</td>
+                        <td class="px-4 py-2">{{ compra.quantidade_comprada }}</td>
+                        <td class="px-4 py-2">{{ compra.data_compra }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <div class="pagination">
-            <span class="step-links">
+        <div class="mt-6 flex justify-between items-center">
+            <div>
                 {% if compras.has_previous %}
-                    <a href="?page=1&q={{ query }}" class="first-last">Primeira</a>
-                    <a href="?page={{ compras.previous_page_number }}&q={{ query }}" class="prev-next">Anterior</a>
+                    <a href="?page=1&q={{ query }}" class="text-teal-600 hover:text-teal-700 font-semibold">Primeira</a>
+                    <a href="?page={{ compras.previous_page_number }}&q={{ query }}" class="ml-4 text-teal-600 hover:text-teal-700 font-semibold">Anterior</a>
                 {% endif %}
-
-                <span class="current">
-                    Página {{ compras.number }} de {{ compras.paginator.num_pages }}.
-                </span>
-
-                {% if compras.has_next %}
-                    <a href="?page={{ compras.next_page_number }}&q={{ query }}" class="prev-next">Próxima</a>
-                    <a href="?page={{ compras.paginator.num_pages }}&q={{ query }}" class="first-last">Última</a>
-                {% endif %}
+            </div>
+            <span class="text-sm text-gray-600">
+                Página {{ compras.number }} de {{ compras.paginator.num_pages }}.
             </span>
+            <div>
+                {% if compras.has_next %}
+                    <a href="?page={{ compras.next_page_number }}&q={{ query }}" class="ml-4 text-teal-600 hover:text-teal-700 font-semibold">Próxima</a>
+                    <a href="?page={{ compras.paginator.num_pages }}&q={{ query }}" class="ml-4 text-teal-600 hover:text-teal-700 font-semibold">Última</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% else %}
-    <p>Não há compras registradas.</p>
+    <p class="mt-4 text-gray-600">Não há compras registradas.</p>
 {% endif %}
 
 {% endblock %}

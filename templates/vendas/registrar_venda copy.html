@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Registrar Venda{% endblock %}
+{% block content %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Venda</title>
+    <link rel="stylesheet" href="{% static 'css/vendas/registrar_venda.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+<div class="breadcrumb">
+    <a href="{% url 'home' %}">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <span class="divider">›</span>
+    <a href="{% url 'listar_vendas' %}">
+        <i class="fas fa-box"></i> Listar vendas
+    </a>
+    <span class="divider">›</span>
+    <span class="current">
+        <i class="fas fa-list"></i> Registrar venda
+    </span>
+</div>
+
+<div class="container">
+    <header>
+        <h1 class="text-title-h1">Registrar Venda</h1>
+    </header>
+
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" class="form-venda">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-item">
+                    <label for="produto">Produto</label>
+                    {{ form.produto }}
+                </div>
+            </div>
+            <div class="input-item">
+                <label for="quantidade">Quantidade</label>
+                {{ form.quantidade }}
+            </div>
+            <div class="input-item">
+                <label for="valor">Preço</label>
+                {{ form.valor }}
+            </div>
+        </div>
+    
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Registrar Venda</button>
+            <a href="{% url 'listar_vendas' %}" class="btn-voltar">Voltar</a>
+        </div>
+    </form>
+    
+</div>
+
+</body>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Listar Vendas{% endblock %}
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/vendas/listar_vendas.css' %}">
+    <meta charset="UTF-8">
+    <title>Lista de Vendas</title>
+</head>
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb">
+    <a href="{% url 'home' %}">Home</a>
+    <span class="divider">/</span>
+    <span class="current">Lista de Vendas</span>
+</nav>
+
+<h3>Últimos Itens Vendidos</h3>
+<div class="recent-items">
+    {% for venda in ultimos_alterados_vendas %}
+    <div class="recent-item">
+        <h4>⬆🪙{{ venda.produto }}</h4>
+        <p>Venda em: {{ venda.data_venda|date:"d/m/Y H:i" }}</p>
+        <p>Preço: R$ {{ venda.valor }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Título e botão -->
+<h2 class="page-title">
+    <div class="title-container">
+        <span>Vendas</span>
+        <div class="floating-image">
+            <img src="{% static 'css/icons/dinheiro.png' %}" alt="Imagem decorativa">
+        </div>
+    </div>
+</h2>
+
+<!-- Formulário de pesquisa -->
+<div class="search-container">
+    <form method="get" action="" class="form-pesquisa">
+        <input type="text" name="q" value="{{ query }}" placeholder="Pesquisar por produto..." class="input-pesquisa">
+        <input type="date" name="data_inicial" value="{{ data_inicial }}" placeholder="Data inicial" class="input-pesquisa">
+        <input type="date" name="data_final" value="{{ data_final }}" placeholder="Data final" class="input-pesquisa">
+        <button type="submit">
+            <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+        </button>
+    </form>
+</div>
+
+
+<div class="container">
+    <a href="{% url 'registrar_venda' %}" class="btn-registrar">+ Registrar Nova Venda</a>
+    <!-- Tabela -->
+    <section class="tabela-vendas">
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Data da Venda</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venda in vendas %}
+                <tr>
+                    <td>{{ venda.produto.codigo }}</td>
+                    <td>{{ venda.produto.nome }}</td>
+                    <td>{{ venda.quantidade }}</td>
+                    <td>{{ venda.data_venda|date:"d/m/Y H:i" }}</td>
+                    <td class="venda-th">R$ {{ venda.valor|floatformat:2 }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Nenhuma venda registrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Paginação -->
+    <div class="pagination">
+        {% if vendas.has_previous %}
+        <a href="?page=1&q={{ query }}" class="btn-paginacao">Primeira</a>
+        <a href="?page={{ vendas.previous_page_number }}&q={{ query }}" class="btn-paginacao">Anterior</a>
+        {% endif %}
+        <span>Página {{ vendas.number }} de {{ vendas.paginator.num_pages }}</span>
+        {% if vendas.has_next %}
+        <a href="?page={{ vendas.next_page_number }}&q={{ query }}" class="btn-paginacao">Próxima</a>
+        <a href="?page={{ vendas.paginator.num_pages }}&q={{ query }}" class="btn-paginacao">Última</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

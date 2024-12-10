@@ -3,96 +3,94 @@
 {% block content %}
 {% load static %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/vendas/listar_vendas.css' %}">
-    <meta charset="UTF-8">
-    <title>Lista de Vendas</title>
-</head>
-
 <!-- Breadcrumb -->
-<nav class="breadcrumb">
-    <a href="{% url 'home' %}">Home</a>
-    <span class="divider">/</span>
-    <span class="current">Lista de Vendas</span>
+<nav class="text-sm text-gray-600 mb-4">
+    <a href="{% url 'home' %}" class="hover:text-[#0891b2]">Home</a>
+    <span class="mx-2">/</span>
+    <span class="font-semibold">Lista de Vendas</span>
 </nav>
 
-<h3>Últimos Itens Vendidos</h3>
-<div class="recent-items">
+<!-- Últimos Itens Vendidos -->
+<h3 class="text-lg font-bold text-[#155e75] mb-4">Últimos Itens Vendidos</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
     {% for venda in ultimos_alterados_vendas %}
-    <div class="recent-item">
-        <h4>⬆🪙{{ venda.produto }}</h4>
-        <p>Venda em: {{ venda.data_venda|date:"d/m/Y H:i" }}</p>
-        <p>Preço: R$ {{ venda.valor }}</p>
+    <div class="border p-4 rounded-lg shadow-sm bg-white">
+        <h4 class="text-lg font-semibold text-[#0891b2]">⬆🪙 {{ venda.produto }}</h4>
+        <p class="text-gray-600">Venda em: {{ venda.data_venda|date:"d/m/Y H:i" }}</p>
+        <p class="text-gray-700 font-medium">Preço: R$ {{ venda.valor }}</p>
     </div>
+    {% empty %}
+    <p class="text-gray-500">Nenhuma venda recente.</p>
     {% endfor %}
 </div>
 
 <!-- Título e botão -->
-<h2 class="page-title">
-    <div class="title-container">
-        <span>Vendas</span>
-        <div class="floating-image">
-            <img src="{% static 'css/icons/dinheiro.png' %}" alt="Imagem decorativa">
-        </div>
-    </div>
-</h2>
+<div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-[#155e75]">Vendas</h2>
+    <img src="{% static 'css/icons/dinheiro.png' %}" alt="Imagem decorativa" class="h-12 w-12">
+</div>
 
-<!-- Formulário de pesquisa -->
-<div class="search-container">
-    <form method="get" action="" class="form-pesquisa">
-        <input type="text" name="q" value="{{ query }}" placeholder="Pesquisar por produto..." class="input-pesquisa">
-        <input type="date" name="data_inicial" value="{{ data_inicial }}" placeholder="Data inicial" class="input-pesquisa">
-        <input type="date" name="data_final" value="{{ data_final }}" placeholder="Data final" class="input-pesquisa">
-        <button type="submit">
-            <img class="search-icon" src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa">
+<!-- Formulário de Pesquisa -->
+<div class="bg-gray-100 p-4 rounded-lg shadow-sm mb-6">
+    <form method="get" action="" class="flex flex-wrap gap-4 items-center">
+        <input type="text" name="q" value="{{ query }}" placeholder="Pesquisar por produto..." class="flex-1 border p-2 rounded focus:outline-none focus:ring focus:ring-[#0891b2]">
+        <input type="date" name="data_inicial" value="{{ data_inicial }}" class="border p-2 rounded focus:outline-none focus:ring focus:ring-[#0891b2]">
+        <input type="date" name="data_final" value="{{ data_final }}" class="border p-2 rounded focus:outline-none focus:ring focus:ring-[#0891b2]">
+        <button type="submit" class="bg-[#0891b2] text-white px-4 py-2 rounded hover:bg-[#155e75]">
+            <span class="hidden md:inline">Pesquisar</span>
+            <img src="{% static 'css/icons/lupa.png' %}" alt="Ícone de pesquisa" class="inline md:hidden h-5 w-5">
         </button>
     </form>
 </div>
 
-
-<div class="container">
-    <a href="{% url 'registrar_venda' %}" class="btn-registrar">+ Registrar Nova Venda</a>
-    <!-- Tabela -->
-    <section class="tabela-vendas">
-        <table>
-            <thead>
-                <tr>
-                    <th>Codigo</th>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Data da Venda</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for venda in vendas %}
-                <tr>
-                    <td>{{ venda.produto.codigo }}</td>
-                    <td>{{ venda.produto.nome }}</td>
-                    <td>{{ venda.quantidade }}</td>
-                    <td>{{ venda.data_venda|date:"d/m/Y H:i" }}</td>
-                    <td class="venda-th">R$ {{ venda.valor|floatformat:2 }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4">Nenhuma venda registrada.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    <!-- Paginação -->
-    <div class="pagination">
-        {% if vendas.has_previous %}
-        <a href="?page=1&q={{ query }}" class="btn-paginacao">Primeira</a>
-        <a href="?page={{ vendas.previous_page_number }}&q={{ query }}" class="btn-paginacao">Anterior</a>
-        {% endif %}
-        <span>Página {{ vendas.number }} de {{ vendas.paginator.num_pages }}</span>
-        {% if vendas.has_next %}
-        <a href="?page={{ vendas.next_page_number }}&q={{ query }}" class="btn-paginacao">Próxima</a>
-        <a href="?page={{ vendas.paginator.num_pages }}&q={{ query }}" class="btn-paginacao">Última</a>
-        {% endif %}
-    </div>
+<!-- Botão para nova venda -->
+<div class="mb-6">
+    <a href="{% url 'registrar_venda' %}" class="bg-[#0891b2] text-white px-6 py-2 rounded shadow hover:bg-[#155e75]">
+        + Registrar Nova Venda
+    </a>
 </div>
+
+<!-- Tabela de Vendas -->
+<section class="overflow-x-auto shadow rounded-lg mb-6">
+    <table class="table-auto w-full border-collapse bg-white">
+        <thead class="bg-[#155e75] text-white">
+            <tr>
+                <th class="py-2 px-4 text-left">Código</th>
+                <th class="py-2 px-4 text-left">Produto</th>
+                <th class="py-2 px-4 text-left">Quantidade</th>
+                <th class="py-2 px-4 text-left">Data da Venda</th>
+                <th class="py-2 px-4 text-left">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venda in vendas %}
+            <tr class="border-b hover:bg-gray-100">
+                <td class="py-2 px-4">{{ venda.produto.codigo }}</td>
+                <td class="py-2 px-4">{{ venda.produto.nome }}</td>
+                <td class="py-2 px-4">{{ venda.quantidade }}</td>
+                <td class="py-2 px-4">{{ venda.data_venda|date:"d/m/Y H:i" }}</td>
+                <td class="py-2 px-4 font-medium text-[#0891b2]">R$ {{ venda.valor|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="py-4 text-center text-gray-500">Nenhuma venda registrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- Paginação -->
+<div class="flex justify-between items-center text-sm">
+    {% if vendas.has_previous %}
+    <a href="?page=1&q={{ query }}" class="text-[#0891b2] hover:underline">Primeira</a>
+    <a href="?page={{ vendas.previous_page_number }}&q={{ query }}" class="text-[#0891b2] hover:underline">Anterior</a>
+    {% endif %}
+    <span>Página {{ vendas.number }} de {{ vendas.paginator.num_pages }}</span>
+    {% if vendas.has_next %}
+    <a href="?page={{ vendas.next_page_number }}&q={{ query }}" class="text-[#0891b2] hover:underline">Próxima</a>
+    <a href="?page={{ vendas.paginator.num_pages }}&q={{ query }}" class="text-[#0891b2] hover:underline">Última</a>
+    {% endif %}
+</div>
+
 {% endblock %}
