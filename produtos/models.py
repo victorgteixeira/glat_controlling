@@ -5,8 +5,30 @@ from django.utils import timezone
 from fornecedores.models import Fornecedor
 from django.contrib.auth.models import User
 
+class Categoria(models.Model):
+    nome = models.CharField(max_length=100)
+    codigo = models.CharField(max_length=10, unique=True, blank=True, null=True)
 
-class Produto(models.Model):
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name_plural = 'Categorias'
+        
+    def gerar_codigo(self):
+        """Gera um código aleatório de 10 caracteres, composto por letras e números"""
+        codigo = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        return codigo
+
+    def save(self, *args, **kwargs):
+        """Override do método save para gerar o código antes de salvar o produto"""
+        if not self.codigo:
+            self.codigo = self.gerar_codigo()
+        super().save(*args, **kwargs)
+
+
+class Produto(models.Model):     
+        
     nome = models.CharField(max_length=100)
     ean = models.CharField(max_length=13, unique=True, blank=False, null=False)
     descricao = models.TextField(blank=True, null=True)
@@ -18,6 +40,7 @@ class Produto(models.Model):
     foto = models.ImageField(upload_to='produtos/', blank=True, null=True)
     codigo = models.CharField(max_length=10, unique=True, blank=True, null=True)
     ativo = models.BooleanField(default=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nome

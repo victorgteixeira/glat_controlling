@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
+    {% if messages %}
+      <div class="space-y-2">
+        {% for message in messages %}
+          <div class="p-4 mb-4 
+                  {% if message.tags == 'error' %}
+              
+             bg-red-100 text-red-700
+
+            {% else %}
+              
+             bg-green-100 text-green-700
+
+            {% endif %} 
+                  rounded-md">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <h2 class="text-2xl font-semibold text-sky-900 mb-4">Cadastrar Categoria</h2>
+
+    <form method="POST" action="{% url 'cadastrar_categoria' %}" class="space-y-4">
+      {% csrf_token %}
+
+      <div>
+        <label for="id_nome" class="block text-sm font-medium text-gray-700">Nome da Categoria</label>
+        <input type="text" name="nome" id="id_nome" value="{{ form.nome.value }}" class="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" />
+        {% if form.nome.errors %}
+          <div class="text-red-500 text-sm mt-1">
+            {% for error in form.nome.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="id_codigo" class="block text-sm font-medium text-gray-700">Código</label>
+        <input type="text" value="{{ form.codigo.value }}" placeholder="Código gerado automaticamente..." class="mt-1 p-2 w-full border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+      </div>
+
+      <div>
+        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400">Salvar Alterações</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

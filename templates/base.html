@@ -1,150 +1,277 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    {% load static %}
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}GLAT CONTROLLING{% endblock %}</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <!-- Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-    </head>
-    <body class="bg-white text-gray-900 flex flex-col min-h-screen">
-        <!-- Cabeçalho -->
-        <header class="bg-[#155e75] text-white">
-            <div class="container mx-auto flex justify-between items-center py-4 px-6">
-                <div class="flex items-center">
-                    <!-- Logo do site ao lado do nome -->
-                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-8 mr-4">
-                    <a href="{% url 'home' %}" class="text-xl font-bold">CONTROLLING</a>
-                </div>
-                <div class="flex items-center">
-                    {% if user.is_authenticated %}
-                        <span class="mr-4">Olá, {{ user.username }}</span>
-                        <!-- Botão de Logout com ícone -->
-                        <a href="{% url 'logout' %}" class="px-3 py-2 bg-[#0891b2] text-white rounded hover:bg-white hover:text-[#0891b2] flex items-center">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                        </a>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="px-3 py-2 bg-[#0891b2] text-white rounded hover:bg-white hover:text-[#0891b2]">Login</a>
-                    {% endif %}
-                </div>
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        GLAT CONTROLLING
+      {% endblock %}
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-white text-gray-900 flex flex-col min-h-screen">
+    <!-- Cabeçalho -->
+    <header class="bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 text-white p-2 flex items-center justify-between">
+      <div class="flex items-center">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10 mr-4" />
+        <h1 class="text-xl font-bold">Controlling</h1>
+      </div>
+      <div class="flex items-center space-x-4">
+        {% if user.is_authenticated %}
+          {% if user.first_name %}
+          <span class="mr-4">Olá, {{ user.first_name }} {{ user.last_name }}</span>
+          {% else %}
+          <span class="mr-4">Olá, {{ user.username }}</span>
+          {% endif %}
+          <!-- Foto do usuário -->
+          <img src="{% if user.profile.photo %}
+              {{ user.profile.photo.url }}
+            {% else %}
+              {% static 'images/default_profile.png' %}
+            {% endif %}"
+            alt="Foto de {{ user.first_name }}"
+            class="h-8 w-8 rounded-full cursor-pointer"
+            onclick="toggleModal()" />
+
+          <!-- Configurações -->
+          <div class="relative">
+            <button id="settingsButton" class="text-gray-100 hover:text-gray-300 focus:outline-none"><i class="fas fa-cog text-xl"></i></button>
+
+            <!-- Menu de configurações -->
+            <div id="settingsMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+              <ul class="text-sm text-gray-800">
+                <li>
+                  <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="flex items-center w-full text-left px-4 py-2 hover:bg-gray-100"><i class="fas fa-sign-out-alt text-gray-600 mr-2"></i> Logout</button>
+                  </form>
+                </li>
+              </ul>
             </div>
-        </header>   
+          </div>
+        {% else %}
+          <a href="{% url 'login' %}" class="px-3 py-2 bg-sky-300 text-white rounded hover:bg-white hover:text-[#0891b2]">Login</a>
+        {% endif %}
+      </div>
+    </header>
 
-<!-- Menu -->
-<nav class="bg-[#164e63] text-white">
-    <ul class="container mx-auto flex space-x-4 py-2 px-6">
+    <script>
+      function toggleModal() {
+        const modal = document.getElementById('userConfigModal')
+        modal.classList.toggle('hidden')
+        modal.classList.toggle('flex')
+      }
+    </script>
 
-        <li class="relative group">
-            <a href="{% url 'home' %}" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-home mr-2"></i>Home
-            </a>
-        </li>
-        
-        <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-box mr-2"></i>Produtos
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'listar_produtos' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Produtos</a></li>
-                <li><a href="{% url 'adicionar_produto' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Produto</a></li>
-            </ul>
-        </li>
+    <script>
+      document.getElementById('settingsButton').addEventListener('click', function () {
+        const settingsMenu = document.getElementById('settingsMenu')
+        settingsMenu.classList.toggle('hidden')
+      })
+    </script>
 
+    <!-- Menu -->
+    <nav class="bg-sky-100 text-sky-600">
+      <ul class="container mx-auto flex space-x-4 py-2 px-6">
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-shopping-cart mr-2"></i>Vendas
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'listar_vendas' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Vendas</a></li>
-                <li><a href="{% url 'registrar_venda' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Venda</a></li>
-            </ul>
+          <a href="{% url 'home' %}" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-home mr-2"></i>Home</a>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-truck mr-2"></i>Fornecedores
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'lista_fornecedores' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Fornecedores</a></li>
-                <li><a href="{% url 'adicionar_fornecedor' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Fornecedor</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-500 px-3 py-2 rounded-md"><i class="fas fa-box mr-2"></i>Produtos</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'listar_produtos' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Produtos</a>
+            </li>
+            <li>
+              <a href="{% url 'adicionar_produto' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Produto</a>
+            </li>
+            <li>
+              <a href="{% url 'listar_categorias' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Categoria</a>
+            </li>
+            <li>
+              <a href="{% url 'cadastrar_categoria' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Categoria</a>
+            </li>
+          </ul>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-cogs mr-2"></i>Estoque
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'estoque_produto' %}" class="block px-4 py-2 hover:bg-[#155e75]">Ver Estoque</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-shopping-cart mr-2"></i>Vendas</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'listar_vendas' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Vendas</a>
+            </li>
+            <li>
+              <a href="{% url 'registrar_venda' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Venda</a>
+            </li>
+          </ul>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-exchange-alt mr-2"></i>Transferências
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'listar_transferencias' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Transferências</a></li>
-                <li><a href="{% url 'registrar_transferencia' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Transferência</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-truck mr-2"></i>Fornecedores</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'lista_fornecedores' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Fornecedores</a>
+            </li>
+            <li>
+              <a href="{% url 'adicionar_fornecedor' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Fornecedor</a>
+            </li>
+          </ul>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-users mr-2"></i>Clientes
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'lista_clientes' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Clientes</a></li>
-                <li><a href="{% url 'adicionar_cliente' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Cliente</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-cogs mr-2"></i>Estoque</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'estoque_produto' %}" class="block px-4 py-2 hover:bg-purple-400">Ver Estoque</a>
+            </li>
+          </ul>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-industry mr-2"></i>Produção
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'listar_producoes' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Produções</a></li>
-                <li><a href="{% url 'produzir_produto' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Produção</a></li>
-                <li><a href="{% url 'cadastrar_ingredientes' %}" class="block px-4 py-2 hover:bg-[#155e75]">Cadastrar ingredientes</a></li>
-                <li><a href="{% url 'listar_produtos_e_ingredientes' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar produtos e ingredientes</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-exchange-alt mr-2"></i>Transferências</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'listar_transferencias' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Transferências</a>
+            </li>
+            <li>
+              <a href="{% url 'registrar_transferencia' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Transferência</a>
+            </li>
+          </ul>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-trash-alt mr-2"></i>Baixas
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'listar_baixas' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Baixas</a></li>
-                <li><a href="{% url 'registrar_baixa' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Baixas</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-users mr-2"></i>Clientes</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'lista_clientes' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Clientes</a>
+            </li>
+            <li>
+              <a href="{% url 'adicionar_cliente' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Cliente</a>
+            </li>
+          </ul>
         </li>
 
         <li class="relative group">
-            <a href="#" class="hover:bg-[#155e75] shadow-lg rounded-lg flex items-center">
-                <i class="fas fa-boxes mr-2"></i>Compras
-            </a>
-            <ul class="absolute left-0 hidden bg-[#0891b2] text-white group-hover:block shadow-lg rounded-lg">
-                <li><a href="{% url 'listar_compras' %}" class="block px-4 py-2 hover:bg-[#155e75]">Listar Compras</a></li>
-                <li><a href="{% url 'registrar_compra' %}" class="block px-4 py-2 hover:bg-[#155e75]">Registrar Compras</a></li>
-            </ul>
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-industry mr-2"></i>Produção</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'listar_producoes' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Produções</a>
+            </li>
+            <li>
+              <a href="{% url 'produzir_produto' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Produção</a>
+            </li>
+            <li>
+              <a href="{% url 'cadastrar_ingredientes' %}" class="block px-4 py-2 hover:bg-purple-400">Cadastrar ingredientes</a>
+            </li>
+            <li>
+              <a href="{% url 'listar_produtos_e_ingredientes' %}" class="block px-4 py-2 hover:bg-purple-400">Listar produtos e ingredientes</a>
+            </li>
+          </ul>
         </li>
-    </ul>
-</nav>
 
+        <li class="relative group">
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-trash-alt mr-2"></i>Baixas</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'listar_baixas' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Baixas</a>
+            </li>
+            <li>
+              <a href="{% url 'registrar_baixa' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Baixas</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="relative group">
+          <a href="#" class="hover:text-sky-400 px-3 py-2 rounded-md"><i class="fas fa-boxes mr-2"></i>Compras</a>
+          <ul class="absolute left-0 hidden bg-sky-300 text-white group-hover:block shadow-lg rounded-lg">
+            <li>
+              <a href="{% url 'listar_compras' %}" class="block px-4 py-2 hover:bg-purple-400">Listar Compras</a>
+            </li>
+            <li>
+              <a href="{% url 'registrar_compra' %}" class="block px-4 py-2 hover:bg-purple-400">Registrar Compras</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- Modal de Configuração do Usuário -->
+    <div id="userConfigModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-xl shadow-xl w-96 overflow-hidden relative">
+        <div class="p-6 border-b">
+          <h2 class="text-xl font-semibold text-gray-800">Configurações do Usuário</h2>
+          <!-- Botão de Fechar -->
+          <button onclick="toggleModal()" class="absolute top-4 right-4 text-gray-600 hover:text-red-600 transition duration-300 rounded-full p-2 hover:bg-gray-200"><i class="fas fa-times text-2xl"></i></button>
+        </div>
+        <form action="{% url 'config_usuario' %}" method="POST" enctype="multipart/form-data" class="p-4 space-y-4">
+          {% csrf_token %}
+          <!-- Primeiro Nome -->
+          <div>
+            <label for="first_name" class="block font-medium text-gray-700">Primeiro Nome</label>
+            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+          </div>
+          <!-- Segundo Nome -->
+          <div>
+            <label for="last_name" class="block font-medium text-gray-700">Segundo Nome</label>
+            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+          </div>
+          <!-- Email -->
+          <div>
+            <label for="email" class="block font-medium text-gray-700">Email</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+          </div>
+          <div>
+            <label class="block font-medium text-gray-700">Alterar foto</label>
+          </div>
+          <!-- Foto -->
+          <div class="relative flex justify-left items-left">
+            <!-- Foto do Usuário -->
+            <img src="{% if user.profile.photo %}
+                {{ user.profile.photo.url }}
+              {% else %}
+                {% static 'images/default_profile.png' %}
+              {% endif %}"
+              alt="User Photo"
+              class="h-16 w-16 rounded-full border-2 border-gray-300 cursor-pointer" />
+            <input type="file" id="photo" name="photo" accept="image/*" class="absolute bottom-0 right-0 opacity-0 cursor-pointer" />
+          </div>
+          <!-- Senha -->
+          <div>
+            <label for="password" class="block font-medium text-gray-700">Nova Senha</label>
+            <input type="password" id="password" name="password" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+          </div>
+          <!-- Botão de Enviar -->
+          <div class="text-right">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function openModal() {
+        document.getElementById('profileModal').classList.remove('hidden')
+      }
+      
+      function closeModal() {
+        document.getElementById('profileModal').classList.add('hidden')
+      }
+    </script>
 
     <!-- Conteúdo -->
-    <main class="container mx-auto flex-grow py-8 px-6">
-        {% block content %}
-        {% endblock %}
-    </main>
+    <main class="bg-gradient-to-tr from-white via-sky-50 to-white container mx-auto flex-grow py-8 px-6">
+      {% block content %}
+
+      {% endblock %}
+    </main> 
 
     <!-- Rodapé -->
-    <footer class="bg-gray-200 text-center py-4 mt-auto">
-        <p>© 2024 GLAT CONTROLLING. Todos os direitos reservados.</p>
+    <footer class="bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 text-white text-center py-4 mt-auto">
+      <p>© 2024 GLAT CONTROLLING. Todos os direitos reservados.</p>
     </footer>
-</body>
+  </body>
 </html>

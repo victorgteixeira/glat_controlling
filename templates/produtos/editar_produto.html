@@ -20,6 +20,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="{{ form.categoria.id_for_label }}" class="block text-sm font-medium text-gray-700">Categoria</label>
+                    {{ form.categoria|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
+                </div>
+
+                <div class="form-group">
                     <label for="{{ form.ean.id_for_label }}" class="block text-sm font-medium text-gray-700">EAN</label>
                     {{ form.ean|add_class:"w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" }}
                 </div>
@@ -38,13 +43,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="search-fornecedor" class="block text-sm font-medium text-gray-700">Fornecedor</label>
-                    <div class="relative">
-                        <input type="text" id="search-fornecedor" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Digite o nome do fornecedor">
-                        <button type="button" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600" onclick="window.location.href='/fornecedores/adicionar/'">+</button>
-                    </div>
-                    <ul id="fornecedor-suggestions" class="mt-2 bg-white border border-gray-300 rounded-lg shadow-lg"></ul>
-                </div>
+                    <label for="fornecedor" class="block text-sm font-medium text-gray-700">Fornecedor</label>
+                    <input type="text" id="fornecedor" class="w-full px-4 py-2 border bg-gray-200 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" 
+                           value="{{ fornecedor_atual }}" readonly>
+                    <input type="hidden" name="fornecedor" value="{{ produto.fornecedor.id }}">
+                </div>                
 
                 <input type="hidden" name="fornecedor" id="id_fornecedor">
 

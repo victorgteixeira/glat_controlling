@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="max-w-screen-xl mx-auto p-6">
+    {% if messages %}
+    <div class="space-y-2">
+        {% for message in messages %}
+            <div class="p-4 mb-4 
+                {% if message.tags == 'error' %} bg-red-100 text-red-700 {% else %} bg-green-100 text-green-700 {% endif %} 
+                rounded-md">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+    <h2 class="text-3xl font-semibold text-sky-900 mb-8 text-center">Categorias de Produtos</h2>
+    <a href="{% url 'cadastrar_categoria' %}" class="mb-4 mt-4 add-product-button mb-4 inline-block bg-gradient-to-r from-green-500 via-green-400 to-green-400 hover:from-green-00 hover:via-green-600 hover:to-green-700 text-white px-6 py-2 rounded-lg focus:outline-none">+ Nova Categoria</a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for categoria in categorias %}
+        <div class="category-card bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 p-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300">
+            <div class="category-content text-center text-white">
+                <h3 class="text-2xl font-bold mb-2">{{ categoria.nome }}</h3>
+                <p class="text-sm mb-4">{{ categoria.codigo }}</p>
+                <a href="{% url 'editar_categoria' categoria.id %}" class="bg-white text-sky-900 py-1 px-3 rounded-full text-xs font-semibold hover:bg-gray-200 transition-all duration-200">Editar</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-gray-500 col-span-4">Nenhuma categoria encontrada.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
